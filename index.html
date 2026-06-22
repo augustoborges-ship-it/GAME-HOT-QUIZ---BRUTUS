@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BRUTUS HOT QUIZ - A Batata Quente do Conhecimento</title>
+    
+    <!-- 1. CARREGAR TAILWIND -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. FONTES: Importar Luckiest Guy e Quicksand através de jsDelivr CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/luckiest-guy@5.0.1/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/quicksand@5.0.1/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/quicksand@5.0.1/700.css">
+    
+    <!-- FontAwesome para ícones expressivos e acessíveis -->
+    <link class="icon-source" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        lilita: ['"Luckiest Guy"', 'Impact', '"Arial Black"', 'sans-serif'],
+                        fredoka: ['"Quicksand"', '"Century Gothic"', 'Nunito', '"Comic Sans MS"', 'sans-serif'],
+                    },
+                    colors: {
+                        gameBlue: {
+                            light: '#4fa8ff',
+                            DEFAULT: '#0070f3',
+                            dark: '#004fc0'
+                        },
+                        gameGreen: {
+                            light: '#5af158',
+                            DEFAULT: '#22c55e',
+                            dark: '#15803d'
+                        },
+                        gameOrange: {
+                            light: '#ff9d42',
+                            DEFAULT: '#f97316',
+                            dark: '#c2410c'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 3. FOLHA DE ESTILOS COM REGRAS PREMIUM E GLASSMORPHISM AAA+ -->
+    <style>
+        body {
+            font-family: 'Quicksand', 'Century Gothic', 'Comic Sans MS', sans-serif;
+            background-color: #050711;
+            overflow: hidden; /* STRICT NO-SCROLL */
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* Classes de Acessibilidade */
+        .high-contrast {
+            filter: contrast(140%) !important;
+        }
+        .high-contrast body {
+            background-color: #000000 !important;
+        }
+        .reduced-motion * {
+            animation: none !important;
+            transition: none !important;
+        }
+
+        /* Relevo tridimensional nos cartões */
+        .card-3d {
+            box-shadow: 0 6px 0 0 rgba(0,0,0,0.25), inset 0 -4px 0 0 rgba(0,0,0,0.15);
+            transition: all 0.15s ease-out;
+        }
+
+        /* ========================================================================== */
+        /* ALGORITMO DE LAPIDAÇÃO CRYSTALLINE 3D PARA TODAS AS CAIXAS DO JOGO         */
+        /* ========================================================================== */
+
+        .glass-panel-crystal, .glass-card {
+            background: linear-gradient(135deg, rgba(22, 28, 45, 0.55) 0%, rgba(11, 15, 25, 0.75) 100%) !important;
+            backdrop-filter: blur(24px) saturate(200%) !important;
+            -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
+            border: 1.5px solid rgba(139, 92, 246, 0.4) !important; 
+            border-top-color: rgba(196, 181, 253, 0.7) !important; 
+            box-shadow: 0 10px 0 0 rgba(15, 10, 35, 0.95), 
+                        0 20px 40px 0 rgba(0, 0, 0, 0.7), 
+                        0 0 35px rgba(139, 92, 246, 0.25), 
+                        inset 0 2px 4px rgba(255, 255, 255, 0.4),
+                        inset 0 -10px 30px rgba(139, 92, 246, 0.25) !important;
+            border-radius: 32px !important;
+            transform: translateY(0);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-3px) !important;
+            box-shadow: 0 13px 0 0 rgba(15, 10, 35, 0.95), 
+                        0 25px 45px 0 rgba(0, 0, 0, 0.8), 
+                        0 0 45px rgba(139, 92, 246, 0.35), 
+                        inset 0 2px 4px rgba(255, 255, 255, 0.5), 
+                        inset 0 -10px 30px rgba(139, 92, 246, 0.35) !important;
+        }
+
+        .glass-panel-crystal-blue, .glass-panel-blue {
+            background: rgba(0, 79, 192, 0.08) !important;
+            backdrop-filter: blur(24px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+            border: 1.5px solid rgba(0, 112, 243, 0.45) !important;
+            border-top-color: rgba(147, 197, 253, 0.8) !important;
+            box-shadow: 0 10px 0 0 rgba(0, 20, 60, 0.95), 
+                        0 20px 40px 0 rgba(0, 0, 0, 0.7),
+                        0 0 35px rgba(0, 112, 243, 0.25),
+                        inset 0 2px 4px rgba(255, 255, 255, 0.4),
+                        inset 0 -10px 30px rgba(0, 112, 243, 0.3) !important;
+            border-radius: 32px !important;
+        }
+
+        .glass-panel-crystal-green, .glass-panel-green {
+            background: rgba(21, 128, 61, 0.06) !important;
+            backdrop-filter: blur(24px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+            border: 1.5px solid rgba(34, 197, 94, 0.4) !important;
+            border-top-color: rgba(134, 239, 172, 0.8) !important;
+            box-shadow: 0 10px 0 0 rgba(10, 40, 20, 0.95), 
+                        0 20px 40px 0 rgba(0, 0, 0, 0.7),
+                        0 0 35px rgba(34, 197, 94, 0.25),
+                        inset 0 2px 4px rgba(255, 255, 255, 0.4),
+                        inset 0 -10px 30px rgba(34, 197, 94, 0.3) !important;
+            border-radius: 32px !important;
+        }
+
+        .glass-scoreboard {
+            background: rgba(3, 4, 10, 0.85) !important;
+            border: 2px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.9),
+                        0 0 15px rgba(255, 255, 255, 0.05) !important;
+            border-radius: 16px !important;
+        }
+
+        @keyframes activePotatoGlow {
+            0%, 100% {
+                border-color: rgba(239, 68, 68, 0.85);
+                box-shadow: 0 0 20px rgba(239, 68, 68, 0.6), 
+                            0 0 45px rgba(239, 68, 68, 0.8), 
+                            inset 0 0 15px rgba(239, 68, 68, 0.4) !important;
+                transform: scale(1.0);
+            }
+            50% {
+                border-color: rgba(249, 115, 22, 1); 
+                box-shadow: 0 0 30px rgba(239, 68, 68, 0.9), 
+                            0 0 65px rgba(239, 68, 68, 1), 
+                            inset 0 0 30px rgba(239, 68, 68, 0.6) !important;
+                transform: scale(1.018); 
+            }
+        }
+        .active-potato-panel-glow {
+            display: block !important;
+            animation: activePotatoGlow 0.75s ease-in-out infinite !important;
+            border-width: 4px !important;
+            transition: transform 0.25s ease;
+        }
+        
+        .btn-premium, .btn-crystal-powerup {
+            position: relative !important;
+            overflow: hidden !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-family: 'Quicksand', 'Century Gothic', sans-serif !important;
+            font-weight: 700 !important;
+            text-transform: uppercase;
+            border-radius: 9999px !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            white-space: nowrap !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+        }
+
+        .btn-premium::after, .btn-crystal-powerup::after, .btn-option-crystal::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 30%;
+            height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(30deg);
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .btn-premium:hover::after, .btn-crystal-powerup:hover::after, .btn-option-crystal:hover::after {
+            left: 140%;
+            opacity: 1;
+            transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+        }
+
+        .btn-lg { padding: 0.55rem 1.75rem !important; font-size: clamp(14px, 1.1vw, 20px) !important; min-height: clamp(42px, 5vh, 52px) !important; }
+        .btn-md { padding: 0.45rem 1.25rem !important; font-size: clamp(12px, 0.9vw, 16px) !important; min-height: clamp(36px, 4.4vh, 46px) !important; }
+
+        .btn-yellow { background: rgba(251, 191, 36, 0.2) !important; border-color: rgba(251, 191, 36, 0.6) !important; color: #fef08a !important; box-shadow: 0 5px 0 0 rgba(180, 83, 9, 0.7), 0 8px 15px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.3) !important; }
+        .btn-yellow:hover:not(:disabled) { background: rgba(251, 191, 36, 0.35) !important; border-color: rgba(251, 191, 36, 0.9) !important; box-shadow: 0 5px 0 0 rgba(180, 83, 9, 0.9), 0 12px 20px rgba(251, 191, 36, 0.4), inset 0 2px 3px rgba(255,255,255,0.5) !important; transform: translateY(-2px); }
+        .btn-yellow:active:not(:disabled) { transform: translateY(3px) !important; box-shadow: 0 2px 0 0 rgba(180, 83, 9, 0.9), 0 4px 8px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.3) !important; }
+
+        .btn-blue { background: rgba(0, 112, 243, 0.2) !important; border-color: rgba(0, 112, 243, 0.6) !important; color: #93c5fd !important; box-shadow: 0 5px 0 0 rgba(0, 79, 192, 0.7), 0 8px 15px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+        .btn-blue:hover:not(:disabled) { background: rgba(0, 112, 243, 0.35) !important; border-color: rgba(0, 112, 243, 0.9) !important; box-shadow: 0 5px 0 0 rgba(0, 79, 192, 0.9), 0 12px 20px rgba(0, 112, 243, 0.4), inset 0 2px 3px rgba(255,255,255,0.4) !important; transform: translateY(-2px); }
+        .btn-blue:active:not(:disabled) { transform: translateY(3px) !important; box-shadow: 0 2px 0 0 rgba(0, 79, 192, 0.9), 0 4px 8px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+
+        .btn-green { background: rgba(34, 197, 94, 0.2) !important; border-color: rgba(34, 197, 94, 0.6) !important; color: #86efac !important; box-shadow: 0 5px 0 0 rgba(21, 128, 61, 0.7), 0 8px 15px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+        .btn-green:hover:not(:disabled) { background: rgba(34, 197, 94, 0.35) !important; border-color: rgba(34, 197, 94, 0.9) !important; box-shadow: 0 5px 0 0 rgba(21, 128, 61, 0.9), 0 12px 20px rgba(34, 197, 94, 0.4), inset 0 2px 3px rgba(255,255,255,0.4) !important; transform: translateY(-2px); }
+        .btn-green:active:not(:disabled) { transform: translateY(3px) !important; box-shadow: 0 2px 0 0 rgba(21, 128, 61, 0.9), 0 4px 8px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+
+        .btn-purple { background: rgba(124, 58, 237, 0.2) !important; border-color: rgba(124, 58, 237, 0.6) !important; color: #ddd6fe !important; box-shadow: 0 5px 0 0 rgba(109, 40, 217, 0.7), 0 8px 15px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+        .btn-purple:hover:not(:disabled) { background: rgba(124, 58, 237, 0.35) !important; border-color: rgba(124, 58, 237, 0.9) !important; box-shadow: 0 5px 0 0 rgba(109, 40, 217, 0.9), 0 12px 20px rgba(124, 58, 237, 0.4), inset 0 2px 3px rgba(255,255,255,0.4) !important; transform: translateY(-2px); }
+        .btn-purple:active:not(:disabled) { transform: translateY(3px) !important; box-shadow: 0 2px 0 0 rgba(109, 40, 217, 0.9), 0 4px 8px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+
+        .btn-gray { background: rgba(75, 85, 99, 0.25) !important; border-color: rgba(156, 163, 175, 0.5) !important; color: #f3f4f6 !important; box-shadow: 0 5px 0 0 rgba(55, 65, 81, 0.7), 0 8px 15px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+        .btn-gray:hover:not(:disabled) { background: rgba(75, 85, 99, 0.4) !important; border-color: rgba(156, 163, 175, 0.8) !important; box-shadow: 0 5px 0 0 rgba(55, 65, 81, 0.9), 0 12px 20px rgba(156, 163, 175, 0.3), inset 0 2px 3px rgba(255,255,255,0.4) !important; transform: translateY(-2px); }
+        .btn-gray:active:not(:disabled) { transform: translateY(3px) !important; box-shadow: 0 2px 0 0 rgba(55, 65, 81, 0.9), 0 4px 8px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+
+        .btn-cyan { background: rgba(8, 145, 178, 0.2) !important; border-color: rgba(8, 145, 178, 0.6) !important; color: #cffafe !important; box-shadow: 0 5px 0 0 rgba(14, 116, 144, 0.7), 0 8px 15px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+        .btn-cyan:hover:not(:disabled) { background: rgba(8, 145, 178, 0.35) !important; border-color: rgba(8, 145, 178, 0.9) !important; box-shadow: 0 5px 0 0 rgba(14, 116, 144, 0.9), 0 12px 20px rgba(8, 145, 178, 0.4), inset 0 2px 3px rgba(255,255,255,0.4) !important; transform: translateY(-2px); }
+        .btn-cyan:active:not(:disabled) { transform: translateY(3px) !important; box-shadow: 0 2px 0 0 rgba(14, 116, 144, 0.9), 0 4px 8px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+
+        .btn-orange { background: rgba(234, 88, 12, 0.2) !important; border-color: rgba(234, 88, 12, 0.6) !important; color: #ffedd5 !important; box-shadow: 0 5px 0 0 rgba(194, 65, 12, 0.7), 0 8px 15px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+        .btn-orange:hover:not(:disabled) { background: rgba(234, 88, 12, 0.35) !important; border-color: rgba(234, 88, 12, 0.9) !important; box-shadow: 0 5px 0 0 rgba(194, 65, 12, 0.9), 0 12px 20px rgba(234, 88, 12, 0.4), inset 0 2px 3px rgba(255,255,255,0.4) !important; transform: translateY(-2px); }
+        .btn-orange:active:not(:disabled) { transform: translateY(3px) !important; box-shadow: 0 2px 0 0 rgba(194, 65, 12, 0.9), 0 4px 8px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+
+        .btn-rose { background: rgba(225, 29, 72, 0.2) !important; border-color: rgba(225, 29, 72, 0.6) !important; color: #ffe4e6 !important; box-shadow: 0 5px 0 0 rgba(190, 18, 60, 0.7), 0 8px 15px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+        .btn-rose:hover:not(:disabled) { background: rgba(225, 29, 72, 0.35) !important; border-color: rgba(225, 29, 72, 0.9) !important; box-shadow: 0 5px 0 0 rgba(190, 18, 60, 0.9), 0 12px 20px rgba(225, 29, 72, 0.4), inset 0 2px 3px rgba(255,255,255,0.4) !important; transform: translateY(-2px); }
+        .btn-rose:active:not(:disabled) { transform: translateY(3px) !important; box-shadow: 0 2px 0 0 rgba(190, 18, 60, 0.9), 0 4px 8px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+
+        /* NOVAS CLASSES PARA BOTÕES DE POWER-UP */
+        .btn-sky { background: rgba(14, 165, 233, 0.2) !important; border-color: rgba(14, 165, 233, 0.6) !important; color: #e0f2fe !important; box-shadow: 0 5px 0 0 rgba(3, 105, 161, 0.7), 0 8px 15px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+        .btn-sky:hover:not(:disabled) { background: rgba(14, 165, 233, 0.35) !important; border-color: rgba(14, 165, 233, 0.9) !important; box-shadow: 0 5px 0 0 rgba(3, 105, 161, 0.9), 0 12px 20px rgba(14, 165, 233, 0.4), inset 0 2px 3px rgba(255,255,255,0.4) !important; transform: translateY(-2px); }
+        .btn-sky:active:not(:disabled) { transform: translateY(3px) !important; box-shadow: 0 2px 0 0 rgba(3, 105, 161, 0.9), 0 4px 8px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+
+        .btn-amber { background: rgba(245, 158, 11, 0.2) !important; border-color: rgba(245, 158, 11, 0.6) !important; color: #fef3c7 !important; box-shadow: 0 5px 0 0 rgba(180, 83, 9, 0.7), 0 8px 15px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+        .btn-amber:hover:not(:disabled) { background: rgba(245, 158, 11, 0.35) !important; border-color: rgba(245, 158, 11, 0.9) !important; box-shadow: 0 5px 0 0 rgba(180, 83, 9, 0.9), 0 12px 20px rgba(245, 158, 11, 0.4), inset 0 2px 3px rgba(255,255,255,0.4) !important; transform: translateY(-2px); }
+        .btn-amber:active:not(:disabled) { transform: translateY(3px) !important; box-shadow: 0 2px 0 0 rgba(180, 83, 9, 0.9), 0 4px 8px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+
+        .btn-emerald { background: rgba(16, 185, 129, 0.2) !important; border-color: rgba(16, 185, 129, 0.6) !important; color: #d1fae5 !important; box-shadow: 0 5px 0 0 rgba(4, 120, 87, 0.7), 0 8px 15px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+        .btn-emerald:hover:not(:disabled) { background: rgba(16, 185, 129, 0.35) !important; border-color: rgba(16, 185, 129, 0.9) !important; box-shadow: 0 5px 0 0 rgba(4, 120, 87, 0.9), 0 12px 20px rgba(16, 185, 129, 0.4), inset 0 2px 3px rgba(255,255,255,0.4) !important; transform: translateY(-2px); }
+        .btn-emerald:active:not(:disabled) { transform: translateY(3px) !important; box-shadow: 0 2px 0 0 rgba(4, 120, 87, 0.9), 0 4px 8px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.2) !important; }
+
+        /* OPÇÕES DE RESPOSTA EM CRISTAL FUMÊ LAPIDADO E FEEDBACK VISUAL */
+        .btn-option-crystal {
+            position: relative !important;
+            overflow: hidden !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: start;
+            gap: 0.75rem;
+            font-family: 'Quicksand', 'Century Gothic', sans-serif !important;
+            font-weight: 700 !important;
+            border-radius: 9999px !important;
+            border: 2px solid rgba(255, 255, 255, 0.15) !important;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(0, 0, 0, 0.15) 51%, rgba(0, 0, 0, 0.35) 100%), rgba(22, 28, 45, 0.65) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            color: #ffffff !important;
+            box-shadow: 0 5px 0 0 rgba(0, 0, 0, 0.6), 
+                        0 8px 20px 0 rgba(0, 0, 0, 0.4),
+                        inset 0 1px 2px rgba(255, 255, 255, 0.25) !important;
+            padding: 0.75rem 1.5rem;
+            min-height: clamp(48px, 6vh, 64px) !important;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        .btn-option-crystal:hover:not(:disabled) {
+            border-color: rgba(251, 191, 36, 0.7) !important;
+            box-shadow: 0 5px 0 0 rgba(180, 83, 9, 0.8),
+                        0 10px 25px 0 rgba(0, 0, 0, 0.5),
+                        0 0 15px rgba(251, 191, 36, 0.25),
+                        inset 0 1.5px 3px rgba(255, 255, 255, 0.4) !important;
+            transform: translateY(-2px);
+        }
+
+        /* --- CLASSES DE FEEDBACK VISUAL (CORRETO/ERRADO/SUSPENSE) --- */
+        @keyframes pulseSuspense {
+            from { transform: scale(1); box-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
+            to { transform: scale(1.03); box-shadow: 0 0 25px rgba(251, 191, 36, 0.8); }
+        }
+        .option-suspense {
+            border-color: rgba(251, 191, 36, 0.9) !important;
+            background: rgba(251, 191, 36, 0.15) !important;
+            color: #fef08a !important;
+            animation: pulseSuspense 0.4s ease-in-out infinite alternate !important;
+        }
+
+        .option-correct-reveal {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.85) 0%, rgba(21, 128, 61, 0.95) 100%) !important;
+            border-color: #86efac !important;
+            box-shadow: 0 0 30px rgba(34, 197, 94, 0.7), inset 0 0 15px rgba(255, 255, 255, 0.4) !important;
+            color: white !important;
+            transform: scale(1.05) !important;
+            z-index: 10;
+        }
+
+        .option-incorrect-reveal {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.7) 0%, rgba(185, 28, 28, 0.8) 100%) !important;
+            border-color: #fca5a5 !important;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.2) !important;
+            color: white !important;
+            opacity: 0.65;
+            transform: scale(0.95) !important;
+        }
+
+        /* EFEITO DE VIDRO TRINCADO AO EXPLODIR */
+        @keyframes glassCrack {
+            0% { filter: none; }
+            10% { filter: contrast(200%) brightness(1.5) drop-shadow(0 0 15px white); background-image: radial-gradient(circle, transparent 20%, rgba(255,255,255,0.45) 21%, transparent 25%, rgba(255,255,255,0.45) 26%, transparent 100%) !important; }
+            100% { filter: none; }
+        }
+        .glass-shattered {
+            animation: glassCrack 0.9s ease-out;
+        }
+
+        /* EFEITO DE FUMAÇA VOLUMÉTRICA DA EXPLOSÃO */
+        @keyframes smokePuff {
+            0% { transform: scale(0.2) translateY(0); opacity: 1; filter: blur(5px); }
+            100% { transform: scale(3.5) translateY(-100px); opacity: 0; filter: blur(35px); }
+        }
+        .smoke-particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(60,60,60,0.95) 0%, rgba(20,20,20,0.7) 50%, rgba(0,0,0,0) 80%);
+            border-radius: 50%;
+            animation: smokePuff 2.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+            pointer-events: none;
+        }
+
+        /* Efeito de flutuação suave dos personagens */
+        @keyframes hoverEffect {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1.5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .animate-hover {
+            animation: hoverEffect 4s ease-in-out infinite;
+        }
+
+        /* Animações da Batata Quente */
+        @keyframes pulsePotato {
+            0% { transform: scale(1) rotate(-5deg); filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.6)); }
+            50% { transform: scale(1.1) rotate(5deg); filter: drop-shadow(0 0 20px rgba(249, 115, 22, 0.9)); }
+            100% { transform: scale(1) rotate(-5deg); filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.6)); }
+        }
+        .animate-potato {
+            animation: pulsePotato 1.2s ease-in-out infinite;
+        }
+        .animate-potato-fast {
+            animation: pulsePotato 0.4s ease-in-out infinite;
+        }
+        @keyframes pulsePotatoPanic {
+            0% { transform: scale(1) rotate(-15deg) translate(0, 0); filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.8)); }
+            50% { transform: scale(1.25) rotate(15deg) translate(-2px, 2px); filter: drop-shadow(0 0 35px rgba(239, 68, 68, 1)); }
+            100% { transform: scale(1) rotate(-15deg) translate(0, 0); filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.8)); }
+        }
+        .animate-potato-panic {
+            animation: pulsePotatoPanic 0.15s ease-in-out infinite !important;
+        }
+
+        /* Efeito de tremor ao esgotar tempo */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70% { transform: translateX(-4px); }
+            20%, 40%, 60%, 80% { transform: translateX(4px); }
+        }
+        .animate-shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Partículas de Confetes */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .progress-bar-glow {
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        button {
+            min-height: clamp(44px, 5vh, 58px);
+            font-size: clamp(14px, 1.2vw, 18px);
+        }
+
+        .character {
+            max-height: clamp(180px, 38vh, 420px);
+            width: auto;
+            object-fit: contain;
+        }
+
+        .home-character {
+            max-height: clamp(240px, 48vh, 520px);
+            width: auto;
+            object-fit: contain;
+        }
+
+        .glass-stat-card {
+            background: rgba(3, 4, 10, 0.5) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
+            border-top-color: rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.8),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+            border-radius: 16px !important;
+        }
+    </style>
+</head>
+<body class="h-screen w-screen flex flex-col items-center justify-center p-0 text-white relative overflow-hidden">
+    
+    <!-- Fundo de ecrã desfocado e calibrado para contraste máximo -->
+    <div class="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700" style="background-image: url('https://raw.githubusercontent.com/augustoborges-ship-it/GAME-HOT-QUIZ---BRUTUS/main/BACKGROUND_HOT_QUIZ.png'); filter: brightness(0.3) saturate(1.15);"></div>
+
+    <!-- CANVAS DE PARTÍCULAS INTERATIVAS (ATMOSFERA DE BRASAS) -->
+    <canvas id="particleCanvas" class="absolute inset-0 z-0 pointer-events-none opacity-50"></canvas>
+
+    <!-- Barra de Ajustes Rápidos e Acessibilidade -->
+    <div class="absolute top-2 left-3 right-3 z-50 flex justify-between items-center text-xs text-gray-300">
+        <div class="flex gap-1.5">
+            <button onclick="toggleAccessibility('contrast')" class="px-2.5 py-1 bg-gray-800/85 hover:bg-gray-700/85 rounded-full flex items-center gap-1 border border-gray-600 transition card-3d cursor-pointer" title="Alto Contraste">
+                <i class="fa-solid fa-circle-half-stroke"></i> <span class="hidden sm:inline">Contraste</span>
+            </button>
+            <button onclick="changeFontSize(1)" class="px-2.5 py-1 bg-gray-800/85 hover:bg-gray-700/85 rounded-full flex items-center gap-1 border border-gray-600 transition card-3d cursor-pointer" title="Aumentar Letra">
+                <i class="fa-solid fa-font"></i>+
+            </button>
+            <button onclick="changeFontSize(-1)" class="px-2.5 py-1 bg-gray-800/85 hover:bg-gray-700/85 rounded-full flex items-center gap-1 border border-gray-600 transition card-3d cursor-pointer" title="Diminuir Letra">
+                <i class="fa-solid fa-font"></i>-
+            </button>
+            <button onclick="toggleAccessibility('motion')" class="px-2.5 py-1 bg-gray-800/85 hover:bg-gray-700/85 rounded-full flex items-center gap-1 border border-gray-600 transition card-3d cursor-pointer" title="Animações Reduzidas">
+                <i class="fa-solid fa-person-running"></i> <span class="hidden sm:inline">Animações</span>
+            </button>
+        </div>
+        <div class="flex gap-1.5">
+            <button onclick="toggleSound()" id="soundBtn" class="px-2.5 py-1 bg-gray-800/85 hover:bg-gray-700/85 rounded-full flex items-center gap-1 border border-gray-600 transition card-3d cursor-pointer" title="Ativar/Desativar Som">
+                <i class="fa-solid fa-volume-high text-green-400"></i> <span class="hidden sm:inline">Som</span>
+            </button>
+            <button onclick="toggleFullscreen()" class="px-2.5 py-1 bg-gray-800/85 hover:bg-gray-700/85 rounded-full flex items-center gap-1 border border-gray-600 transition card-3d cursor-pointer" title="Ecrã Inteiro">
+                <i class="fa-solid fa-expand"></i> <span class="hidden sm:inline">Expandir</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Wrapper sem barras de rolagem e totalmente expandido em 100% de largura e altura -->
+    <main id="gameContainer" class="w-full h-screen max-h-screen z-10 bg-black/40 backdrop-blur-md p-3 md:p-5 relative overflow-hidden flex flex-col justify-between">
+        
+        <!-- ================= TELA INICIAL ================= -->
+        <div id="screenStart" class="flex flex-col justify-between items-center h-full py-2">
+            <!-- Cabeçalho (18% da altura) -->
+            <div class="text-center animate-hover mt-4">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-lilita text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-400 to-red-500 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] tracking-wide">
+                    BRUTUS HOT QUIZ
+                </h1>
+                <p class="text-sm md:text-lg lg:text-xl font-fredoka font-semibold tracking-wider text-yellow-100 uppercase mt-0.5">
+                    🔥 A BATATA QUENTE DO CONHECIMENTO 🔥
+                </p>
+            </div>
+
+            <!-- Palco dos Capitães Estilo Arena (52% da altura) -->
+            <div class="w-full flex flex-row justify-between items-center px-4 md:px-12 my-2 flex-grow min-h-0 overflow-visible relative">
+                <!-- Equipe Azul com a pill-overlap exatamente como na image_8210ae.png -->
+                <div class="glass-panel-crystal-blue p-4 flex flex-col items-center justify-center transition-transform hover:scale-105 relative">
+                    <img src="https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/PRONTOS%20PARA%20INICIAR_EQUIPE%20AZUL.png" alt="Equipe Azul Pronta" class="home-character animate-hover drop-shadow-[0_8px_16px_rgba(0,112,243,0.5)]">
+                    <span class="absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 px-4 py-1 bg-gameBlue text-white font-lilita rounded-full border border-white shadow-md text-xs md:text-sm tracking-wide whitespace-nowrap z-20">EQUIPE AZUL</span>
+                </div>
+
+                <!-- Batata Central Pulsante -->
+                <div class="flex flex-col items-center relative mx-4">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-orange-400 to-red-600 rounded-full flex items-center justify-center border-4 border-yellow-300 shadow-lg animate-potato cursor-pointer hover:scale-105 transition-transform duration-200" onclick="playSound('welcome')">
+                        <i class="fa-solid fa-fire text-yellow-200 text-2xl md:text-3xl"></i>
+                    </div>
+                    <span class="text-yellow-300 text-[10px] mt-1.5 font-semibold animate-pulse uppercase tracking-wider text-center">Toca para iniciar!</span>
+                </div>
+
+                <!-- Equipe Verde com a pill-overlap exatamente como na image_8210ae.png -->
+                <div class="glass-panel-crystal-green p-4 flex flex-col items-center justify-center transition-transform hover:scale-105 relative" style="animation-delay: 0.5s;">
+                    <img src="https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/PRONTOS%20PARA%20INICIAR_EQUIPE%20VERDE.png" alt="Equipe Verde Pronta" class="home-character animate-hover drop-shadow-[0_8px_16px_rgba(34,197,94,0.5)]">
+                    <span class="absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 px-4 py-1 bg-gameGreen text-white font-lilita rounded-full border border-white shadow-md text-xs md:text-sm tracking-wide whitespace-nowrap z-20">EQUIPE VERDE</span>
+                </div>
+            </div>
+
+            <!-- Grade de Menus AAA+ -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 w-full max-w-lg px-4 mb-2">
+                <button onclick="goToScreen('mode')" class="btn-premium btn-lg btn-yellow">
+                    <i class="fa-solid fa-circle-play"></i> JOGAR AGORA!
+                </button>
+                <button onclick="openModal('howToPlay')" class="btn-premium btn-lg btn-gray">
+                    <i class="fa-solid fa-circle-question"></i> COMO JOGAR?
+                </button>
+                <button onclick="openModal('settings')" class="btn-premium btn-lg btn-cyan">
+                    <i class="fa-solid fa-gears"></i> CONFIGURAÇÕES
+                </button>
+                <button onclick="openTeacherDashboard()" class="btn-premium btn-lg btn-purple">
+                    <i class="fa-solid fa-graduation-cap"></i> PROFESSOR (BNCC)
+                </button>
+            </div>
+            
+            <div class="text-center text-[10px] text-white/30">
+                <span>© 2026 Copyright | Desenvolvido por Editora Brasil Cultural</span>
+            </div>
+        </div>
+
+        <!-- ================= SELEÇÃO DE MODO DE JOGO ================= -->
+        <div id="screenMode" class="hidden flex flex-col justify-between items-center h-full py-2">
+            <div class="text-center mt-2">
+                <h2 class="text-2xl md:text-3xl font-lilita text-yellow-300">ESCOLHA O MODO DE JOGO</h2>
+                <p class="text-xs md:text-sm font-fredoka text-gray-300">Escolha o desafio ideal para a sua turma ou estudo individual</p>
+            </div>
+
+            <!-- Cards de Escolha de Vidro Lapidado Neutro -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-5xl px-4 my-2 overflow-hidden flex-grow items-center">
+                
+                <!-- Equipe vs Equipe -->
+                <div class="glass-card h-[44vh] max-h-[300px] flex flex-col justify-between items-center text-center relative overflow-hidden group p-4">
+                    <img src="https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_EQUIPE_AZUL_CAPIT%C3%83O.png" alt="Capitão Azul" class="h-[12vh] max-h-[80px] object-contain mb-1 drop-shadow-[0_4px_6px_rgba(0,112,243,0.3)]">
+                    <h3 class="font-lilita text-gameBlue-light uppercase">EQUIPE VS EQUIPE</h3>
+                    <p class="text-[10px] md:text-xs text-gray-300 leading-normal line-clamp-3">Perfeito para o professor mediar em sala de aula física ou projetor, dividindo os estudantes em equipes.</p>
+                    <button onclick="selectGameMode('team')" class="btn-premium btn-md btn-blue w-full">SELECIONAR</button>
+                </div>
+
+                <!-- Jogador vs NPC -->
+                <div class="glass-card h-[44vh] max-h-[300px] flex flex-col justify-between items-center text-center relative overflow-hidden group p-4">
+                    <div class="flex gap-1.5 justify-center mb-1">
+                        <img src="https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_EQUIPE_AZUL_CAPIT%C3%83O.png" alt="Capitão Azul" class="h-[9vh] max-h-[60px] object-contain">
+                        <img src="https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_EQUIPE_VERDE_CAPIT%C3%83O.png" alt="Capitão Verde" class="h-[9vh] max-h-[60px] object-contain">
+                    </div>
+                    <h3 class="font-lilita text-purple-400 uppercase">JOGADOR VS NPC</h3>
+                    <p class="text-[10px] md:text-xs text-gray-300 leading-normal line-clamp-3">Jogue sozinho contra o Brutus Inteligência Artificial! Escolha a sua equipe e prepare-se.</p>
+                    <button onclick="selectGameMode('npc')" class="btn-premium btn-md btn-purple w-full">SELECIONAR</button>
+                </div>
+
+                <!-- Modo Cooperativo -->
+                <div class="glass-card h-[44vh] max-h-[300px] flex flex-col justify-between items-center text-center relative overflow-hidden group p-4">
+                    <img src="https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_EQUIPE_VERDE_CAPIT%C3%83O.png" alt="Capitão Verde" class="h-[12vh] max-h-[80px] object-contain mb-1 drop-shadow-[0_4px_6px_rgba(34,197,94,0.3)]">
+                    <h3 class="font-lilita text-gameGreen-light uppercase">MODO COOPERATIVO</h3>
+                    <p class="text-[10px] md:text-xs text-gray-300 leading-normal line-clamp-3">Toda a turma joga unida contra o tempo. Respondam juntos para salvar as 3 vidas coletivas!</p>
+                    <button onclick="selectGameMode('coop')" class="btn-premium btn-md btn-green w-full">SELECIONAR</button>
+                </div>
+
+            </div>
+
+            <!-- Botão de Voltar -->
+            <button onclick="goToScreen('start')" class="btn-premium btn-md btn-gray px-5 mb-2">
+                <i class="fa-solid fa-arrow-left"></i> VOLTAR
+            </button>
+            <div class="text-center text-[10px] text-white/30 mb-1">
+                <span>© 2026 Copyright | Desenvolvido por Editora Brasil Cultural</span>
+            </div>
+        </div>
+
+        <!-- ================= AJUSTE DE PARTIDA / SETUP ================= -->
+        <div id="screenSetup" class="hidden flex flex-col justify-between items-center h-full py-2">
+            <!-- Cabeçalho de Setup -->
+            <div class="text-center mt-2">
+                <h2 id="setupTitle" class="text-2xl md:text-3xl font-lilita text-yellow-300">DEFINIÇÕES DA PARTIDA</h2>
+                <p class="text-xs md:text-sm font-fredoka text-gray-300">Ajuste os parâmetros pedagógicos antes de entrar na arena</p>
+            </div>
+
+            <!-- CARD DE PARÂMETROS: Vidro Lapidado Translúcido Neutro -->
+            <div class="w-full max-w-2xl glass-card my-1 grid grid-cols-1 sm:grid-cols-2 gap-4 h-[42vh] max-h-[290px] items-center overflow-hidden p-5">
+                <!-- Coluna de Seleção Curricular -->
+                <div class="flex flex-col justify-start">
+                    <label class="font-lilita text-yellow-200 mb-1 flex items-center gap-1.5 text-base sm:text-lg">
+                        <i class="fa-solid fa-book"></i> Área Curricular
+                    </label>
+                    <select id="setupCurriculum" onchange="updateSetupSummary()" class="w-full bg-gray-950 text-white rounded-lg p-2 border border-gray-700 font-fredoka text-xs mb-3 outline-none focus:border-yellow-400">
+                        <option value="all">Todas as Áreas (Misto)</option>
+                        <option value="Português">Língua Portuguesa (Alfabetização)</option>
+                        <option value="Matemática">Matemática (Lógica/Operações)</option>
+                        <option value="Ciências">Ciências da Natureza</option>
+                        <option value="História">História</option>
+                        <option value="Geografia">Geografia</option>
+                    </select>
+
+                    <label class="font-lilita text-yellow-200 mb-1 flex items-center gap-1.5 text-base sm:text-lg">
+                        <i class="fa-solid fa-circle-nodes"></i> Nível de Ensino
+                    </label>
+                    <select id="setupLevel" onchange="updateSetupSummary()" class="w-full bg-gray-950 text-white rounded-lg p-2 border border-gray-700 font-fredoka text-xs outline-none focus:border-yellow-400">
+                        <option value="all">Qualquer nível</option>
+                        <option value="Anos Iniciais">Ensino Fundamental (Anos Iniciais)</option>
+                        <option value="Anos Finais">Ensino Fundamental (Anos Finais)</option>
+                    </select>
+                </div>
+
+                <!-- Parâmetros de Gameplay -->
+                <div class="flex flex-col justify-start">
+                    <label class="font-lilita text-yellow-200 mb-1 flex items-center gap-1.5 text-base sm:text-lg">
+                        <i class="fa-solid fa-clock"></i> Tempo da Batata
+                    </label>
+                    <select id="setupTimer" onchange="updateSetupSummary()" class="w-full bg-gray-950 text-white rounded-lg p-2 border border-gray-700 font-fredoka text-xs mb-3 outline-none focus:border-yellow-400">
+                        <option value="20">Rápido (20 segundos)</option>
+                        <option value="30" selected>Padrão (30 segundos)</option>
+                        <option value="45">Moderado (45 segundos)</option>
+                        <option value="60">Estendido (60 segundos)</option>
+                        <option value="90">Pensativo (90 segundos)</option>
+                    </select>
+
+                    <div id="npcSelectionArea" class="hidden">
+                        <label class="font-lilita text-purple-400 mb-1 flex items-center gap-1.5 text-base sm:text-lg">
+                            <i class="fa-solid fa-robot"></i> Dificuldade do NPC
+                        </label>
+                        <select id="setupNpcDiff" onchange="updateSetupSummary()" class="w-full bg-gray-950 text-white rounded-lg p-2 border border-gray-700 font-fredoka text-xs outline-none focus:border-yellow-400">
+                            <option value="easy">Fácil (NPC erra mais)</option>
+                            <option value="medium" selected>Médio (Desafiador)</option>
+                            <option value="hard">Difícil (NPC Quase Perfeito)</option>
+                        </select>
+                    </div>
+
+                    <div id="targetScoreArea">
+                        <label class="font-lilita text-yellow-200 mb-1 flex items-center gap-1.5 text-base sm:text-lg">
+                            <i class="fa-solid fa-star"></i> Pontos para Vencer
+                        </label>
+                        <select id="setupTargetScore" onchange="updateSetupSummary()" class="w-full bg-gray-950 text-white rounded-lg p-2 border border-gray-700 font-fredoka text-xs outline-none focus:border-yellow-400">
+                            <option value="30">30 pontos</option>
+                            <option value="50" selected>50 pontos</option>
+                            <option value="100">100 pontos</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumo Visual compacto em Cartão Estatístico (Stat Card) -->
+            <div id="setupSummaryBlock" class="w-full max-w-2xl glass-stat-card px-3 py-1.5 my-1 flex justify-around items-center text-xs">
+                <div class="flex items-center gap-1 text-purple-200">
+                    <i class="fa-solid fa-gamepad"></i> <strong>Modo:</strong> <span id="sumMode" class="text-white font-semibold">Equipes</span>
+                </div>
+                <div class="flex items-center gap-1 text-purple-200">
+                    <i class="fa-solid fa-book-bookmark"></i> <strong>Disciplina:</strong> <span id="sumCurriculum" class="text-white font-semibold">Misto</span>
+                </div>
+                <div class="flex items-center gap-1 text-purple-200">
+                    <i class="fa-solid fa-graduation-cap"></i> <strong>Nível:</strong> <span id="sumLevel" class="text-white font-semibold">Geral</span>
+                </div>
+                <div class="flex items-center gap-1 text-purple-200">
+                    <i class="fa-solid fa-stopwatch"></i> <strong>Tempo:</strong> <span id="sumTimer" class="text-white font-semibold">30s</span>
+                </div>
+                <div id="sumTargetWrapper" class="flex items-center gap-1 text-purple-200">
+                    <i class="fa-solid fa-flag-checkered"></i> <strong>Meta:</strong> <span id="sumTarget" class="text-white font-semibold">50pts</span>
+                </div>
+            </div>
+
+            <!-- Botões de Ação do Setup -->
+            <div class="flex gap-4 mb-1">
+                <button onclick="goToScreen('mode')" class="btn-premium btn-md btn-gray px-5">
+                    <i class="fa-solid fa-arrow-left"></i> VOLTAR
+                </button>
+                <button onclick="startGame()" class="btn-premium btn-md btn-green px-7">
+                    INICIAR ARENA <i class="fa-solid fa-play"></i>
+                </button>
+            </div>
+            <div class="text-center text-[10px] text-white/30 mb-1">
+                <span>© 2026 Copyright | Desenvolvido por Editora Brasil Cultural</span>
+            </div>
+        </div>
+
+        <!-- ================= ARENA PRINCIPAL DO JOGO ================= -->
+        <div id="screenArena" class="hidden flex flex-col justify-between h-full transition-all duration-300">
+            <!-- Cabeçalho Superior da Arena -->
+            <div class="flex justify-between items-center border-b border-white/10 pb-1.5">
+                <div class="flex flex-col">
+                    <span id="arenaTitle" class="text-lg md:text-xl font-lilita text-yellow-300">BRUTUS HOT QUIZ</span>
+                    <span id="arenaSubInfo" class="text-[9px] text-white/50 uppercase font-semibold">Modo: Equipe vs Equipe</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div id="activeEventBadge" class="hidden flex items-center gap-1 bg-amber-500/20 border border-amber-500 text-amber-300 px-2 py-0.5 rounded-full text-[9px] font-bold animate-bounce uppercase">
+                        <i class="fa-solid fa-bolt"></i> <span id="activeEventName">NENHUM EVENTO</span>
+                    </div>
+                    <div class="hidden sm:flex flex-col text-right text-[10px]">
+                        <span id="arenaScoreLabel" class="text-white/40">Limite de Vitória</span>
+                        <span id="arenaScoreTarget" class="font-lilita text-yellow-200">50 Pontos</span>
+                    </div>
+                    <div id="coopLivesContainer" class="hidden flex items-center gap-1.5 bg-red-950/70 border border-red-500/30 px-2 py-1 rounded-full text-xs">
+                        <span class="text-[9px] font-semibold mr-0.5">VIDAS:</span>
+                        <i id="life1" class="fa-solid fa-heart text-red-500 animate-pulse"></i>
+                        <i id="life2" class="fa-solid fa-heart text-red-500 animate-pulse"></i>
+                        <i id="life3" class="fa-solid fa-heart text-red-500 animate-pulse"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Colunas das Equipes e Caixa Central -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-5 items-stretch flex-grow my-2 pb-4 overflow-visible">
+                
+                <!-- PAINEL ESQUERDO: Equipe Azul em Cristal Crystalline -->
+                <div id="panelBlue" class="lg:col-span-1 glass-panel-blue p-2 flex flex-col justify-between items-center text-center relative overflow-visible">
+                    <!-- INDICADOR VERMELHO COMPACTO QUE NÃO INVADE AS LATERAIS -->
+                    <div id="potatoGlowBlue" class="absolute -inset-1.5 rounded-[32px] border-4 pointer-events-none hidden z-10"></div>
+                    
+                    <div class="flex flex-col items-center flex-grow justify-center w-full">
+                        <span id="labelBlueTeam" class="text-sm font-lilita text-gameBlue-light flex items-center gap-1">
+                            <i class="fa-solid fa-user-group text-[10px]"></i> EQUIPE AZUL
+                        </span>
+                        <!-- Capitão do Jogo -->
+                        <div class="relative flex-grow flex items-center justify-center min-h-0 w-full mt-2">
+                            <div class="relative inline-block">
+                                <img id="avatarBlue" src="https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_BATATA%20NA%20M%C3%83O_EQUIPE_AZUL.png" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/PRONTOS%20PARA%20INICIAR_EQUIPE%20AZUL.png';" alt="Avatar Azul" class="character transition-all duration-300 animate-hover drop-shadow-[0_10px_20px_rgba(0,112,243,0.35)]">
+                                <div id="potatoIndicatorBlue" class="absolute bottom-4 right-4 w-12 h-12 bg-gradient-to-br from-orange-400 via-red-500 to-red-600 rounded-full flex items-center justify-center border-2 border-yellow-300 shadow-[0_0_15px_rgba(249,115,22,0.8)] animate-bounce hidden z-10">
+                                    <i class="fa-solid fa-fire text-yellow-200 text-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Placar Cristalino -->
+                    <div class="w-full mt-2 border-t border-white/10 pt-2 flex flex-col items-center">
+                        <span class="text-[10px] text-white/50 font-bold uppercase tracking-wider mb-1">Pontuação</span>
+                        <div class="glass-scoreboard px-6 py-1.5 min-w-[110px] flex items-center justify-center">
+                            <span id="scoreBlue" class="text-4xl sm:text-5xl font-lilita text-white drop-shadow-[0_2px_4px_rgba(0,112,243,0.6)]">0</span>
+                        </div>
+                        <div id="comboBlue" class="text-[9px] bg-gameBlue text-white rounded-full py-0.5 px-2.5 font-semibold hidden inline-block mt-1 animate-bounce">Combo x0</div>
+                    </div>
+                </div>
+
+                <!-- PAINEL CENTRAL: Jogo (Em Vidro Neutro Roxo/Holográfico 10px) -->
+                <div class="lg:col-span-2 flex flex-col justify-between glass-panel-crystal p-3 relative overflow-hidden">
+                    
+                    <!-- RASCUNHO DE VIDRO OVERLAY -->
+                    <div id="scratchpadOverlay" class="hidden absolute inset-0 z-30 bg-[#0d1223]/95 border-2 border-purple-500/50 rounded-[32px] flex flex-col p-4">
+                        <div class="flex justify-between items-center border-b border-white/10 pb-2 mb-2">
+                            <span class="font-lilita text-purple-300 text-sm flex items-center gap-1.5">
+                                <i class="fa-solid fa-pen-ruler"></i> RASCUNHO DE VIDRO (QUADRO DE APOIO)
+                            </span>
+                            <div class="flex gap-2">
+                                <button onclick="clearScratchpad()" class="btn-premium btn-md btn-orange px-3 py-1 text-xs">Limpar</button>
+                                <button onclick="toggleScratchpad(false)" class="btn-premium btn-md btn-gray px-3 py-1 text-xs">Fechar</button>
+                            </div>
+                        </div>
+                        <canvas id="scratchpadCanvas" class="flex-grow w-full bg-[#050711]/90 border border-white/10 rounded-2xl cursor-crosshair"></canvas>
+                        <span class="text-[9px] text-white/40 text-center mt-2">DICA: Use o rato ou ecrã tátil para fazer contas, esboçar phoneticamente ou estruturar respostas!</span>
+                    </div>
+
+                    <!-- Batata e Tempo no Topo -->
+                    <div class="flex flex-col items-center justify-center mb-1">
+                        <div class="flex items-center gap-2">
+                            <div id="centralPotato" class="w-9 h-9 bg-gradient-to-br from-orange-400 to-red-600 rounded-full flex items-center justify-center border-2 border-yellow-300 animate-potato shadow-md">
+                                <i class="fa-solid fa-fire text-yellow-200 text-sm"></i>
+                            </div>
+                            <div id="timerDisplay" class="text-3xl md:text-4xl font-lilita text-green-400 tracking-wider">30s</div>
+                        </div>
+                        <div class="w-full bg-gray-950 h-2.5 rounded-full overflow-hidden mt-1.5 border border-white/5">
+                            <div id="timerProgress" class="h-full bg-green-500 transition-all duration-100 ease-linear" style="width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- CARD DE PERGUNTA -->
+                    <div id="questionCard" class="flex-grow flex flex-col justify-center items-center text-center p-4 min-h-0 gap-4 sm:gap-6">
+                        <div class="flex flex-col items-center gap-2 w-full shrink-0">
+                            <div class="flex items-center gap-2 shrink-0">
+                                <div id="curriculumTag" class="text-[10px] font-bold px-3 py-1 bg-yellow-400/10 text-yellow-300 rounded-full border border-yellow-400/20 uppercase tracking-wide">CIÊNCIAS</div>
+                                <button onclick="toggleScratchpad(true)" class="px-2.5 py-0.5 bg-purple-600/25 border border-purple-500/50 hover:bg-purple-600/50 rounded-full text-[9px] font-bold flex items-center gap-1 transition cursor-pointer">
+                                    <i class="fa-solid fa-pen-ruler"></i> QUADRO RASCUNHO
+                                </button>
+                            </div>
+                            <h3 id="questionText" class="text-lg sm:text-xl md:text-2xl font-bold font-fredoka leading-relaxed text-white max-w-4xl px-2 sm:px-4 mt-4 mb-2">Carregando pergunta...</h3>
+                        </div>
+                        
+                        <div id="questionMedia" class="hidden mb-4 max-h-16 overflow-hidden rounded-lg border border-white/10 shrink-0">
+                            <img id="questionImage" src="" alt="Imagem de apoio" class="object-cover h-full max-w-full">
+                        </div>
+
+                        <!-- Alternativas de Quiz -->
+                        <div id="optionsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full px-2 sm:px-8 mt-2">
+                            <!-- Injetado via Javascript como .btn-option-crystal -->
+                        </div>
+                    </div>
+
+                    <!-- Power-ups Pedagógicos -->
+                    <div class="border-t border-white/10 pt-2 mt-1 shrink-0">
+                        <div class="text-center text-[10px] text-yellow-200 font-bold mb-1">POWER-UPS PEDAGÓGICOS (OPCIONAIS - USO ÚNICO POR EQUIPE)</div>
+                        <div class="flex justify-center gap-2.5 flex-wrap">
+                            <button onclick="usePowerup('freeze')" id="pwrFreeze" class="btn-crystal-powerup btn-md btn-sky" title="Congela o tempo por 5 segundos">
+                                <i class="fa-solid fa-snowflake"></i> Congelar
+                            </button>
+                            <button onclick="usePowerup('hint')" id="pwrHint" class="btn-crystal-powerup btn-md btn-amber" title="Revela uma dica curta">
+                                <i class="fa-solid fa-lightbulb"></i> Dica
+                            </button>
+                            <button onclick="usePowerup('shield')" id="pwrShield" class="btn-crystal-powerup btn-md btn-emerald" title="Protege contra erro nesta rodada">
+                                <i class="fa-solid fa-shield"></i> Escudo
+                            </button>
+                            <button onclick="usePowerup('skip')" id="pwrSkip" class="btn-crystal-powerup btn-md btn-rose" title="Muda de pergunta sem queimar">
+                                <i class="fa-solid fa-forward-fast"></i> Pular
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAINEL DIREITO: Equipe Verde em Cristal Crystalline -->
+                <div id="panelGreen" class="lg:col-span-1 glass-panel-green p-2 flex flex-col justify-between items-center text-center relative overflow-visible">
+                    <!-- INDICADOR VERMELHO COMPACTO QUE NÃO INVADE AS LATERAIS -->
+                    <div id="potatoGlowGreen" class="absolute -inset-1.5 rounded-[32px] border-4 pointer-events-none hidden z-10"></div>
+                    
+                    <div class="flex flex-col items-center flex-grow justify-center w-full">
+                        <span id="labelGreenTeam" class="text-sm font-lilita text-gameGreen-light flex items-center gap-1">
+                            <i class="fa-solid fa-user-group text-[10px]"></i> EQUIPE VERDE
+                        </span>
+                        <!-- Capitão Verde -->
+                        <div class="relative flex-grow flex items-center justify-center min-h-0 w-full mt-2">
+                            <div class="relative inline-block">
+                                <img id="avatarGreen" src="https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_EQUIPE_VERDE_CAPIT%C3%83O.png" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/PRONTOS%20PARA%20INICIAR_EQUIPE%20VERDE.png';" alt="Avatar Verde" class="character transition-all duration-300 animate-hover drop-shadow-[0_10px_20px_rgba(34,197,94,0.35)]">
+                                <div id="potatoIndicatorGreen" class="absolute bottom-4 right-4 w-12 h-12 bg-gradient-to-br from-orange-400 via-red-500 to-red-600 rounded-full flex items-center justify-center border-2 border-yellow-300 shadow-[0_0_15px_rgba(249,115,22,0.8)] animate-bounce hidden z-10">
+                                    <i class="fa-solid fa-fire text-yellow-200 text-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Placar Cristalino -->
+                    <div class="w-full mt-2 border-t border-white/10 pt-2 flex flex-col items-center">
+                        <span class="text-[10px] text-white/50 font-bold uppercase tracking-wider mb-1">Pontuação</span>
+                        <div class="glass-scoreboard px-6 py-1.5 min-w-[110px] flex items-center justify-center">
+                            <span id="scoreGreen" class="text-4xl sm:text-5xl font-lilita text-white drop-shadow-[0_2px_4px_rgba(34,197,94,0.6)]">0</span>
+                        </div>
+                        <div id="comboGreen" class="text-[9px] bg-gameGreen text-white rounded-full py-0.5 px-2.5 font-semibold hidden inline-block mt-1 animate-bounce">Combo x0</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CONTROLES DO PROFESSOR (14% da altura) -->
+            <div id="teacherControls" class="glass-stat-card p-2 flex flex-wrap justify-between items-center gap-1.5">
+                <div class="flex items-center gap-1.5">
+                    <span class="text-[9px] bg-purple-600 text-white font-lilita px-1.5 py-0.5 rounded">PAINEL DO PROFESSOR</span>
+                    <p class="text-[10px] text-gray-400 hidden sm:inline">Valide os resultados das respostas da turma ou force ações de controle.</p>
+                </div>
+                <div class="flex gap-1.5 flex-wrap">
+                    <button onclick="teacherValidateResult(true)" class="btn-premium btn-md btn-green px-4 py-1.5">
+                        <i class="fa-solid fa-circle-check"></i> Correta (+10)
+                    </button>
+                    <button onclick="teacherValidateResult(false)" class="btn-premium btn-md btn-rose px-4 py-1.5">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Queimou / Erro
+                    </button>
+                    <button onclick="passPotato()" class="btn-premium btn-md btn-orange px-4 py-1.5">
+                        <i class="fa-solid fa-share"></i> Passar Batata
+                    </button>
+                    <button onclick="togglePauseGame()" id="pauseBtn" class="btn-premium btn-md btn-amber px-4 py-1.5">
+                        <i class="fa-solid fa-pause"></i> Pausar
+                    </button>
+                    <button onclick="confirmExitGame()" class="btn-premium btn-md btn-gray px-4 py-1.5">
+                        <i class="fa-solid fa-door-open"></i> Sair
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center text-[10px] text-white/30 mt-0.5">
+                <span>© 2026 Copyright | Desenvolvido por Editora Brasil Cultural</span>
+            </div>
+        </div>
+
+        <!-- ================= DASHBOARD FINAL DO JOGO ================= -->
+        <div id="screenDashboard" class="hidden flex flex-col justify-between items-center h-full w-full py-2">
+            <div class="text-center mt-2 shrink-0">
+                <span class="text-[10px] bg-yellow-400 text-amber-950 px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wide">Fim da Ronda Pedagógica</span>
+                <h2 class="text-2xl md:text-3xl font-lilita text-yellow-300 mt-0.5">RELATÓRIO DE DOMÍNIO</h2>
+            </div>
+
+            <!-- Conteúdo Central expandido lateralmente -->
+            <div class="flex flex-col justify-center items-center gap-3 w-full flex-grow overflow-hidden">
+                <!-- Avatares de Vitória Final e Resumo de Pontos -->
+                <div class="flex flex-row items-center justify-between gap-3 sm:gap-8 my-1 overflow-hidden w-full max-w-5xl shrink-0 px-4 md:px-8">
+                    <!-- Lado Esquerdo: Equipe Azul -->
+                    <div class="flex flex-col items-center">
+                        <img id="dashLeftAvatar" src="https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/EQUIPE%20AZUL_PERDEU_FINAL.png" alt="Equipe Azul" class="h-[14vh] md:h-[25vh] max-h-[180px] sm:max-h-[220px] object-contain transition-all duration-300">
+                        <span id="dashLeftLabel" class="text-[10px] font-lilita text-gameBlue-light mt-1 uppercase">EQUIPE AZUL</span>
+                    </div>
+
+                    <!-- Painel de Destaque Central -->
+                    <div class="glass-card w-full max-w-md flex flex-col items-center justify-center min-h-[140px] p-4">
+                        <span id="winnerAnnounceText" class="text-sm md:text-base font-lilita text-gameGreen-light">VITÓRIA DA EQUIPE VERDE!</span>
+                        <div id="dashFinalScores" class="text-2xl sm:text-3xl font-lilita text-white my-1.5">40 x 10</div>
+                        <p id="dashPedagogicalCongrats" class="text-[10px] md:text-xs text-gray-300 font-fredoka leading-normal line-clamp-3">Excelente progresso e prontidão fonológica. A classe demonstrou alto foco em componentes do quotidiano!</p>
+                    </div>
+
+                    <!-- Lado Direito: Equipe Verde / NPC -->
+                    <div class="flex flex-col items-center">
+                        <img id="dashRightAvatar" src="https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/EQUIPE%20VERDE_CAMPE%C3%83O_FINAL.png" alt="Equipe Verde" class="h-[14vh] md:h-[25vh] max-h-[180px] sm:max-h-[220px] object-contain transition-all duration-300">
+                        <span id="dashRightLabel" class="text-[10px] font-lilita text-gameGreen-light mt-1 uppercase">EQUIPE VERDE</span>
+                    </div>
+                </div>
+
+                <!-- Cards de Resultados do Dashboard expandido (Fininhos) -->
+                <div class="grid grid-cols-3 gap-3 w-full max-w-5xl px-4 md:px-8 my-0.5 shrink-0">
+                    <div class="glass-stat-card p-3 text-center flex flex-col justify-center items-center">
+                        <span id="dashAccuracy" class="text-2xl font-lilita text-green-400 block">85%</span>
+                        <h4 class="text-[10px] text-gray-400 font-bold uppercase tracking-wider mt-1">Taxa de Acerto</h4>
+                        <p class="text-[10px] text-gray-500 mt-0.5"><span id="dashCorrectCount">12</span> acertos / <span id="dashErrorCount">2</span> erros</p>
+                    </div>
+                    <div class="glass-stat-card p-3 text-center flex flex-col justify-center items-center">
+                        <span id="dashAvgTime" class="text-2xl font-lilita text-amber-400 block">8.4s</span>
+                        <h4 class="text-[10px] text-gray-400 font-bold uppercase tracking-wider mt-1">Tempo Médio</h4>
+                        <p class="text-[10px] text-gray-500 mt-0.5">Raciocínio ágil</p>
+                    </div>
+                    <div class="glass-stat-card p-3 text-center flex flex-col justify-center items-center">
+                        <span id="dashBnccSkills" class="text-[11px] font-lilita text-purple-400 truncate block font-sans">EF01LP01, EF02MA01</span>
+                        <h4 class="text-[10px] text-gray-400 font-bold uppercase tracking-wider mt-1">Domínio BNCC</h4>
+                        <p class="text-[10px] text-gray-500 mt-0.5">Letramento & Leitura</p>
+                    </div>
+                </div>
+
+                <!-- Sugestão Pedagógica Prática -->
+                <div class="w-full max-w-5xl px-4 md:px-8 my-0.5 shrink-0">
+                    <div class="glass-stat-card p-3 flex items-start gap-3">
+                        <i class="fa-solid fa-lightbulb text-purple-400 text-sm mt-0.5"></i>
+                        <div>
+                            <span class="text-[10px] sm:text-xs font-bold text-purple-300 block">SUGESTÃO PEDAGÓGICA OBJETIVA:</span>
+                            <p id="dashRecommendation" class="text-[10px] sm:text-xs text-gray-300 leading-relaxed font-fredoka line-clamp-2">Os alunos demonstraram dificuldades leves em raciocínio de frações (Matemática). Recomenda-se realizar uma mediação manipulativa antes da próxima partida.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles Finais do Dashboard -->
+            <div class="w-full flex flex-col items-center gap-1.5 mt-auto pb-0.5 shrink-0">
+                <div class="flex gap-4">
+                    <button onclick="goToScreen('start')" class="btn-premium btn-md btn-gray px-5">
+                        MENU PRINCIPAL
+                    </button>
+                    <!-- Exportador de desempenho BNCC -->
+                    <button onclick="copyBnccReport()" class="btn-premium btn-md btn-purple px-6">
+                        COPIAR RELATÓRIO BNCC <i class="fa-solid fa-clipboard"></i>
+                    </button>
+                    <button onclick="restartGameWithSameConfig()" class="btn-premium btn-md btn-blue px-6">
+                        JOGAR NOVAMENTE <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                </div>
+                
+                <div class="text-center text-[10px] text-white/30 mt-0.5">
+                    <span>© 2026 Copyright | Desenvolvido por Editora Brasil Cultural</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ================= MODAIS AUXILIARES ================= -->
+    
+    <!-- Modal: Como Jogar -->
+    <div id="modalHowToPlay" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="glass-card p-5 max-w-lg w-full text-white relative">
+            <h3 class="text-xl font-lilita text-yellow-300 flex items-center gap-1.5 mb-2">
+                <i class="fa-solid fa-fire"></i> DINÂMICA DA BATATA QUENTE
+            </h3>
+            <div class="text-xs space-y-2.5 font-fredoka text-gray-200">
+                <p><strong>1. Quem começa?</strong> O sistema escolhe uma das equipes de forma aleatória para iniciar com a Batata.</p>
+                <p><strong>2. Qual o objetivo?</strong> Responder à pergunta central de forma correta o mais rápido possível para passar a batata para o seu adversário.</p>
+                <p><strong>3. Resposta correta:</strong> Se acertar dentro do tempo, a equipe passa a Batata para o adversário e pontua. Respostas muito rápidas fornecem bónus de pontos!</p>
+                <p><strong>4. Errou ou o tempo acabou?</strong> A batata queima na sua mão! A equipe adversária ganha pontos.</p>
+                <p><strong>5. Modos de Jogo:</strong></p>
+                <ul class="list-disc list-inside pl-1 space-y-1 text-[11px]">
+                    <li><strong class="text-gameBlue-light">Equipe vs Equipe:</strong> Ideal para lousa digital e mediação do professor.</li>
+                    <li><strong class="text-purple-400">Jogador vs NPC:</strong> Treine sozinho contra a inteligência mecânica do Brutus.</li>
+                    <li><strong class="text-gameGreen-light">Modo Cooperativo:</strong> Joguem juntos sem rivalidade para alcançar a meta de acertos sem deixar a batata explodir 3 vezes.</li>
+                </ul>
+            </div>
+            <div class="mt-4 flex justify-end">
+                <button onclick="closeModal('howToPlay')" class="btn-premium btn-md btn-yellow px-4">
+                    ENTENDI!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Definições Gerais -->
+    <div id="modalSettings" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="glass-card p-5 max-w-sm w-full text-white relative">
+            <h3 class="text-xl font-lilita text-cyan-300 flex items-center gap-1.5 mb-3">
+                <i class="fa-solid fa-gears"></i> AJUSTES DE ACESSIBILIDADE
+            </h3>
+            <div class="space-y-3">
+                <div class="glass-stat-card p-2 flex justify-between items-center text-xs">
+                    <span class="font-semibold">Tamanho das Fontes</span>
+                    <div class="flex gap-1.5">
+                        <button onclick="changeFontSize(-1)" class="w-7 h-7 bg-gray-700/50 hover:bg-gray-600 rounded flex items-center justify-center font-bold font-fredoka text-xs transition">-</button>
+                        <button onclick="changeFontSize(1)" class="w-7 h-7 bg-gray-700/50 hover:bg-gray-600 rounded flex items-center justify-center font-bold font-fredoka text-xs transition">+</button>
+                    </div>
+                </div>
+
+                <div class="glass-stat-card p-2 flex justify-between items-center text-xs">
+                    <span class="font-semibold">Alto Contraste</span>
+                    <button onclick="toggleAccessibility('contrast')" class="btn-premium btn-md btn-cyan px-2.5">ALTERAR</button>
+                </div>
+
+                <div class="glass-stat-card p-2 flex justify-between items-center text-xs">
+                    <span class="font-semibold">Animações Reduzidas</span>
+                    <button onclick="toggleAccessibility('motion')" class="btn-premium btn-md btn-cyan px-2.5">ALTERAR</button>
+                </div>
+            </div>
+            <div class="mt-4 flex justify-end">
+                <button onclick="closeModal('settings')" class="btn-premium btn-md btn-cyan px-4">
+                    GRAVAR
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Caixa de Mensagem Customizada -->
+    <div id="customAlertModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm">
+        <div class="glass-card p-5 max-w-sm w-full text-center text-white relative">
+            <div class="w-14 h-14 bg-orange-600/20 border border-orange-500/50 text-orange-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-2 shadow-[0_0_15px_rgba(249,115,22,0.3)]">
+                <i id="customAlertIcon" class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h4 id="customAlertTitle" class="text-xl font-lilita text-orange-400 mb-2">Atenção!</h4>
+            <p id="customAlertText" class="text-sm font-fredoka text-gray-200 mb-6">A batata quente explodiu! Prepare-se para a próxima.</p>
+            <button onclick="closeCustomAlert()" class="btn-premium btn-md btn-orange w-full py-2">
+                CONTINUAR
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal: Confirmação Customizado -->
+    <div id="customConfirmModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm">
+        <div class="glass-card p-5 max-w-sm w-full text-center text-white relative">
+            <div class="w-14 h-14 bg-purple-600/20 border border-purple-500/50 text-purple-400 rounded-full flex items-center justify-center text-2xl mx-auto mb-2 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
+                <i class="fa-solid fa-circle-question animate-pulse"></i>
+            </div>
+            <h4 id="customConfirmTitle" class="text-lg font-lilita text-purple-300 mb-1.5">Sair do Jogo?</h4>
+            <p id="customConfirmText" class="text-xs font-fredoka text-gray-200 mb-4">Deseja abandonar a arena de jogo e voltar ao ecrã inicial?</p>
+            <div class="flex gap-3 justify-center">
+                <button id="customConfirmBtnYes" class="btn-premium btn-md btn-purple px-5">SIM</button>
+                <button onclick="closeCustomConfirm()" class="btn-premium btn-md btn-gray px-5">NÃO</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Animações de Gameplay (Batata voando e Explosão) -->
+    <div id="modalActionAnimation" class="hidden fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+        <!-- Container absoluto de Fumaça Volumétrica -->
+        <div id="smokeContainer" class="absolute inset-0 overflow-hidden pointer-events-none z-0"></div>
+
+        <div class="text-center w-full max-w-4xl flex flex-col items-center overflow-visible z-10 relative">
+            <h3 id="animationTitle" class="text-3xl md:text-5xl font-lilita text-yellow-300 mb-2 tracking-wide animate-bounce">BATATA LANÇADA!</h3>
+            
+            <div class="relative w-full max-w-3xl min-h-[380px] md:min-h-[480px] flex justify-between items-center my-4 px-6 md:px-16 overflow-visible">
+                <div class="flex flex-col items-center">
+                    <img id="animAvatarLeft" src="https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_BATATA%20NA%20M%C3%83O_EQUIPE_AZUL.png" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/PRONTOS%20PARA%20INICIAR_EQUIPE%20AZUL.png';" alt="Avatar Esquerda" class="h-64 sm:h-72 md:h-80 lg:h-[360px] object-contain transition-transform duration-300 drop-shadow-[0_15px_30px_rgba(0,0,0,0.6)]">
+                    <span id="animNameLeft" class="text-sm font-lilita text-gameBlue-light mt-2 tracking-wider">EQUIPE AZUL</span>
+                </div>
+
+                <div id="animPotato" class="absolute left-1/2 -translate-x-1/2 w-20 h-20 bg-gradient-to-br from-orange-400 to-red-600 rounded-full flex items-center justify-center border-4 border-yellow-300 shadow-[0_0_30px_rgba(249,115,22,0.8)] hidden">
+                    <i class="fa-solid fa-fire text-yellow-200 text-4xl animate-spin"></i>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <img id="animAvatarRight" src="https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/PRONTOS%20PARA%20INICIAR_EQUIPE%20VERDE.png" alt="Avatar Verde" class="h-64 sm:h-72 md:h-80 lg:h-[360px] object-contain transition-transform duration-300 drop-shadow-[0_15px_30px_rgba(0,0,0,0.6)]">
+                    <span id="animNameRight" class="text-sm font-lilita text-gameGreen-light mt-2 tracking-wider">EQUIPE VERDE</span>
+                </div>
+            </div>
+
+            <p id="animationSubText" class="text-base md:text-xl font-fredoka text-gray-300 mt-4 leading-relaxed max-w-2xl">Equipe respondeu rápido e livrou-se do perigo!</p>
+        </div>
+    </div>
+
+    <!-- Modal: Área do Professor / Informações BNCC -->
+    <div id="modalTeacher" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+        <div class="glass-card p-5 max-w-4xl w-full text-white max-h-[85vh] overflow-y-auto relative">
+            <div class="flex justify-between items-center border-b border-white/10 pb-2 mb-3">
+                <div class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-graduation-cap text-purple-400 text-2xl"></i>
+                    <div>
+                        <h3 class="text-xl font-lilita text-purple-400">ÁREA DO PROFESSOR & CONFIGURAÇÃO BNCC</h3>
+                        <p class="text-[10px] text-gray-300">Medie as questões e acompanhe as competências trabalhadas</p>
+                    </div>
+                </div>
+                <button onclick="closeModal('teacher')" class="text-gray-400 hover:text-white cursor-pointer"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+
+            <!-- Tabs de Navegação -->
+            <div class="flex gap-4 mb-3 border-b border-white/10 pb-1 text-xs">
+                <button onclick="switchTeacherTab('skills')" id="tabBtnSkills" class="font-lilita px-3 py-1.5 border-b-2 border-purple-500 text-purple-300">COMPETÊNCIAS BNCC ATIVAS</button>
+                <button onclick="switchTeacherTab('editor')" id="tabBtnEditor" class="font-lilita px-3 py-1.5 border-b-2 border-transparent text-gray-400 hover:text-white">EDITOR DE QUESTÕES</button>
+            </div>
+
+            <!-- Tab: Competências BNCC Ativas -->
+            <div id="teacherTabSkills" class="space-y-3">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="glass-stat-card p-3 text-xs">
+                        <span class="text-[9px] bg-gameBlue/20 border border-gameBlue/40 text-gameBlue-light px-1.5 py-0.5 rounded font-bold">LÍNGUA PORTUGUESA (ALFABETIZAÇÃO)</span>
+                        <h4 class="text-xs font-lilita text-yellow-200 mt-1">EF01LP01 - Consciência Fonológica</h4>
+                        <p class="text-[10px] text-gray-300 leading-normal mt-0.5">Identificação de vogais e letras iniciais no desenvolvimento fonético.</p>
+                        <div class="mt-1 text-[9px] text-gray-400"><strong>Mediação:</strong> Peça ao estudante que repita o fonema em voz alta.</div>
+                    </div>
+                    <div class="glass-stat-card p-3 text-xs">
+                        <span class="text-[9px] bg-gameGreen/20 border border-gameGreen/40 text-gameGreen-light px-1.5 py-0.5 rounded font-bold">MATEMÁTICA</span>
+                        <h4 class="text-xs font-lilita text-yellow-200 mt-1">EF01MA01 - Contagem e Sequência Lógica</h4>
+                        <p class="text-[10px] text-gray-300 leading-normal mt-0.5">Utilizar números naturais como indicador de quantidade ou de ordem.</p>
+                        <div class="mt-1 text-[9px] text-gray-400"><strong>Mediação:</strong> Questione qual o número successor do resultado obtido.</div>
+                    </div>
+                    <div class="glass-stat-card p-3 text-xs">
+                        <span class="text-[9px] bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 px-1.5 py-0.5 rounded font-bold">CIÊNCIAS</span>
+                        <h4 class="text-xs font-lilita text-yellow-200 mt-1">EF02CI01 - Matéria e Energia</h4>
+                        <p class="text-[10px] text-gray-300 leading-normal mt-0.5">Identificar e classificar diferentes materiais e estados físicos da matéria.</p>
+                        <div class="mt-1 text-[9px] text-gray-400"><strong>Mediação:</strong> Peça exemplos práticos de evaporação no dia a dia.</div>
+                    </div>
+                    <div class="glass-stat-card p-3 text-xs">
+                        <span class="text-[9px] bg-amber-500/20 border border-amber-500/40 text-amber-300 px-1.5 py-0.5 rounded font-bold">HISTÓRIA & GEOGRAFIA</span>
+                        <h4 class="text-xs font-lilita text-yellow-200 mt-1">EF03GE01 - Paisagem e Vivência</h4>
+                        <p class="text-[10px] text-gray-300 leading-normal mt-0.5">Identificar aspectos culturais, económicos e físicos de paisagens.</p>
+                        <div class="mt-1 text-[9px] text-gray-400"><strong>Mediação:</strong> Explique brevemente a relação do clima com a dinâmica local.</div>
+                    </div>
+                </div>
+
+                <div class="glass-stat-card p-3 text-xs flex gap-2 items-start border-purple-500/40">
+                    <i class="fa-solid fa-lightbulb text-purple-400 mt-0.5"></i>
+                    <div>
+                        <span class="font-lilita text-xs text-purple-300 block mb-0.5">MEDIAÇÃO EM PROJETORES:</span>
+                        <p class="text-[10px] text-gray-300 leading-normal">Divida fisicamente a classe em fileira esquerda (Azul) e fileira direita (Verde). O líder ou porta-voz da vez deve ouvir as propostas do grupo e ditar a resposta final.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Editor de Questões -->
+            <div id="teacherTabEditor" class="space-y-3 hidden">
+                <span class="text-xs text-yellow-200 block mb-1 font-semibold">ADICIONAR NOVA QUESTÃO AO JOGO</span>
+                <form id="addQuestionForm" onsubmit="event.preventDefault(); saveCustomQuestion();" class="glass-stat-card p-3 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-[10px] font-bold text-gray-400">Área Curricular</label>
+                        <select id="newQCurriculum" class="bg-gray-950 border border-gray-700 rounded p-1.5 text-xs">
+                            <option value="Português">Língua Portuguesa</option>
+                            <option value="Matemática">Matemática</option>
+                            <option value="Ciências">Ciências</option>
+                            <option value="História">História</option>
+                            <option value="Geografia">Geografia</option>
+                        </select>
+
+                        <label class="text-[10px] font-bold text-gray-400">Nível de Ensino</label>
+                        <select id="newQLevel" class="bg-gray-950 border border-gray-700 rounded p-1.5 text-xs">
+                            <option value="Anos Iniciais">Anos Iniciais</option>
+                            <option value="Anos Finais">Anos Finais</option>
+                        </select>
+
+                        <label class="text-[10px] font-bold text-gray-400">Habilidade BNCC</label>
+                        <input id="newQBncc" type="text" placeholder="Ex: EF01LP01" class="bg-gray-950 border border-gray-700 rounded p-1.5 text-xs" required>
+
+                        <label class="text-[10px] font-bold text-gray-400">Enunciado / Pergunta</label>
+                        <textarea id="newQText" placeholder="Digite a pergunta pedagógica aqui..." class="bg-gray-950 border border-gray-700 rounded p-1.5 text-xs h-12" required></textarea>
+                    </div>
+
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-[10px] font-bold text-gray-400">Alternativas (Separe por vírgulas)</label>
+                        <input id="newQOptions" type="text" placeholder="Opção A, Opção B, Opção C, Opção D" class="bg-gray-950 border border-gray-700 rounded p-1.5 text-xs" required>
+
+                        <label class="text-[10px] font-bold text-gray-400">Índice da Resposta Correta (0 a 3)</label>
+                        <input id="newQCorrect" type="number" min="0" max="3" value="0" class="bg-gray-950 border border-gray-700 rounded p-1.5 text-xs" required>
+
+                        <label class="text-[10px] font-bold text-gray-400">Dica curta para o Power-up</label>
+                        <input id="newQHint" type="text" placeholder="Uma dica rápida..." class="bg-gray-950 border border-gray-700 rounded p-1.5 text-xs">
+
+                        <button type="submit" class="btn-premium btn-md btn-purple w-full mt-2">
+                            GUARDAR QUESTÃO
+                        </button>
+                    </div>
+                </form>
+
+                <div>
+                    <span class="text-xs text-yellow-200 block mb-1 font-semibold">QUESTÕES DISPONÍVEIS</span>
+                    <div id="teacherQuestionsList" class="space-y-2 max-h-36 overflow-y-auto pr-1">
+                        <!-- Injetado dinamicamente -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 border-t border-white/10 pt-2 flex justify-between items-center text-[10px] text-gray-400">
+                <span>Total de Questões Ativas: <strong id="teacherQuestionsCount">10</strong></span>
+                <button onclick="closeModal('teacher')" class="btn-premium btn-purple px-4">
+                    CONCLUIR
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= CONTEÚDO SCRIPT (LÓGICA JAVASCRIPT UNIFICADA) ================= -->
+    <script>
+        // BANCO DE QUESTÕES PEDAGÓGICAS COMPLETO (EDITÁVEL)
+        let questions = [
+            {
+                id: 1,
+                level: "Anos Iniciais",
+                curriculum: "Português",
+                bncc: "EF01LP01",
+                objective: "Reconhecimento de vogal inicial",
+                statement: "Qual palavra começa com a mesma letra da imagem do animal 'ABELHA'?",
+                options: ["Elefante", "Amor", "Uva", "Igreja"],
+                correct: 1,
+                difficulty: "easy",
+                hint: "A letra inicial é 'A'."
+            },
+            {
+                id: 2,
+                level: "Anos Iniciais",
+                curriculum: "Matemática",
+                bncc: "EF01MA01",
+                objective: "Contagem básica de elementos",
+                statement: "Se a Equipe Azul tem 3 batatas e a Equipe Verde tem 5, quantas batatas têm juntas?",
+                options: ["6 batatas", "7 batatas", "8 batatas", "9 batatas"],
+                correct: 2,
+                difficulty: "easy",
+                hint: "Some 3 + 5."
+            },
+            {
+                id: 3,
+                level: "Anos Iniciais",
+                curriculum: "Ciências",
+                bncc: "EF02CI01",
+                objective: "Estados físicos da água",
+                statement: "Quando o gelo derrete e passa a água líquida, que mudança de estado ocorreu?",
+                options: ["Solidificação", "Fusão", "Vaporização", "Condensação"],
+                correct: 1,
+                difficulty: "medium",
+                hint: "Passagem do sólido para o líquido."
+            },
+            {
+                id: 4,
+                level: "Anos Iniciais",
+                curriculum: "Geografia",
+                bncc: "EF03GE01",
+                objective: "Representação de paisagem",
+                statement: "Qual elemento é natural e faz parte da paisagem de uma floresta?",
+                options: ["Prédios altos", "Árvores nativas", "Ruas asfaltadas", "Pontes metálicas"],
+                correct: 1,
+                difficulty: "easy",
+                hint: "Não foi construído pelo ser humano."
+            },
+            {
+                id: 5,
+                level: "Anos Finais",
+                curriculum: "História",
+                bncc: "EF06HI01",
+                objective: "Uso do tempo histórico",
+                statement: "Qual dos instrumentos abaixo foi historicamente o primeiro usado para marcar o tempo?",
+                options: ["Relógio de Sol", "Cronômetro digital", "Relógio mecânico", "Pêndulo moderno"],
+                correct: 0,
+                difficulty: "medium",
+                hint: "Depende da luz do dia."
+            },
+            {
+                id: 6,
+                level: "Anos Finais",
+                curriculum: "Matemática",
+                bncc: "EF06MA01",
+                objective: "Frações e divisão",
+                statement: "Uma pizza foi cortada em 8 fatias iguais. Se comer 2 fatias, que fração representa o que restou?",
+                options: ["2/8", "6/8", "4/8", "1/8"],
+                correct: 1,
+                difficulty: "medium",
+                hint: "Subtraia 2 de 8 para obter o que sobrou."
+            },
+            {
+                id: 7,
+                level: "Anos Finais",
+                curriculum: "Português",
+                bncc: "EF07LP01",
+                objective: "Semântica e vocabulário",
+                statement: "Qual palavra é um antônimo de 'efêmero' (algo muito passageiro)?",
+                options: ["Rápido", "Duradouro", "Fugaz", "Momento"],
+                correct: 1,
+                difficulty: "hard",
+                hint: "O oposto de passageiro é aquilo que permanece."
+            },
+            {
+                id: 8,
+                level: "Anos Iniciais",
+                curriculum: "Ciências",
+                bncc: "EF03CI02",
+                objective: "Planeta Terra",
+                statement: "Qual é o movimento que a Terra realiza ao redor do Sol e que dura cerca de 365 dias?",
+                options: ["Rotação", "Translação", "Gravitação", "Evolução"],
+                correct: 1,
+                difficulty: "medium",
+                hint: "Provoca a mudança das estações do ano."
+            },
+            {
+                id: 9,
+                level: "Anos Finais",
+                curriculum: "Geografia",
+                bncc: "EF07GE02",
+                objective: "Climas do Brasil",
+                statement: "Qual o clima predominante na região Nordeste do Brasil caracterizado por pouca chuva?",
+                options: ["Equatorial", "Tropical Úmido", "Semiárido", "Subtropical"],
+                correct: 2,
+                difficulty: "medium",
+                hint: "Tem relação com a vegetação da Caatinga."
+            },
+            {
+                id: 10,
+                level: "Anos Finais",
+                curriculum: "Ciências",
+                bncc: "EF09CI01",
+                objective: "Tabela Periódica",
+                statement: "Qual é o elemento químico mais abundante no universo?",
+                options: ["Oxigênio", "Carbono", "Hélio", "Hidrogênio"],
+                correct: 3,
+                difficulty: "hard",
+                hint: "É o elemento número 1 da tabela periódica."
+            }
+        ];
+
+        // CONFIGURAÇÕES E ESTADO GLOBAL DO JOGO
+        let gameState = {
+            activeScreen: "start",
+            gameMode: "team", 
+            selectedCurriculum: "all",
+            selectedLevel: "all",
+            timerLimit: 30,
+            targetScore: 50,
+            npcDiff: "medium",
+            scoreBlue: 0,
+            scoreGreen: 0,
+            activeTeam: "blue", 
+            coopLives: 3,
+            comboBlue: 0,
+            comboGreen: 0,
+            timer: 30,
+            timerInterval: null,
+            isPaused: false,
+            currentQuestionIndex: 0,
+            filteredQuestions: [],
+            pwrShieldActive: false,
+            totalCorrectAnswers: 0,
+            totalWrongAnswers: 0,
+            answerTimes: [],
+            skillsAcquired: new Set(),
+            teamPowerupsUsed: {
+                blue: new Set(),
+                green: new Set()
+            }
+        };
+
+        // --- SISTEMA LOCAL STORAGE ---
+        function loadCustomQuestions() {
+            const saved = localStorage.getItem('brutus_custom_questions');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    questions = questions.concat(parsed);
+                } catch(e) {}
+            }
+        }
+        
+        function loadConfigs() {
+            const saved = localStorage.getItem('brutus_configs');
+            if (saved) {
+                try {
+                    const configs = JSON.parse(saved);
+                    if(configs.curriculum) document.getElementById("setupCurriculum").value = configs.curriculum;
+                    if(configs.level) document.getElementById("setupLevel").value = configs.level;
+                    if(configs.timer) document.getElementById("setupTimer").value = configs.timer;
+                    if(configs.npcDiff) document.getElementById("setupNpcDiff").value = configs.npcDiff;
+                    if(configs.targetScore) document.getElementById("setupTargetScore").value = configs.targetScore;
+                } catch(e){}
+            }
+        }
+        
+        function saveConfigs() {
+            const configs = {
+                curriculum: document.getElementById("setupCurriculum").value,
+                level: document.getElementById("setupLevel").value,
+                timer: document.getElementById("setupTimer").value,
+                npcDiff: document.getElementById("setupNpcDiff").value,
+                targetScore: document.getElementById("setupTargetScore").value
+            };
+            localStorage.setItem('brutus_configs', JSON.stringify(configs));
+        }
+
+        // CANVAS DE PARTÍCULAS INTERATIVAS (ATMOSFERA DE BRASAS)
+        let canvas = document.getElementById("particleCanvas");
+        let ctx = canvas.getContext("2d");
+        let particles = [];
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 50;
+                this.size = 1 + Math.random() * 4;
+                this.speedY = 0.5 + Math.random() * 1.5;
+                this.speedX = -0.5 + Math.random() * 1;
+                this.opacity = 0.2 + Math.random() * 0.6;
+                this.hue = 25; // Golden Ember
+            }
+
+            update(panicMode) {
+                this.y -= this.speedY * (panicMode ? 3.5 : 1);
+                this.x += this.speedX * (panicMode ? 2.5 : 1);
+                
+                if (panicMode) {
+                    this.hue = 0; // Crimson Red Spark
+                } else {
+                    this.hue = 25 + Math.sin(this.y * 0.01) * 10;
+                }
+
+                if (this.y < -10) {
+                    this.y = canvas.height + 10;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${this.hue}, 100%, 60%, ${this.opacity})`;
+                ctx.shadowBlur = this.size * 3;
+                ctx.shadowColor = `hsla(${this.hue}, 100%, 50%, 0.8)`;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 60; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function animateLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let panicMode = (gameState.activeScreen === 'arena' && gameState.timer <= 5);
+            particles.forEach(p => {
+                p.update(panicMode);
+                p.draw();
+            });
+            requestAnimationFrame(animateLoop);
+        }
+        requestAnimationFrame(animateLoop);
+
+        // Áudios Oficiais
+        let sfxWhoosh = new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/whoosh.mp3");
+        let sfxVictory = new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/Victory.mp3");
+        let sfxCorreto = new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/correto.mp3");
+        let sfxPower = new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/power.mp3");
+        let sfxIncorreto = new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/Incorreto.mp3");
+        let sfxPanic = new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/BRUTUS-MALUCO-GAME/main/Alarme%20de%20P%C3%A2nico.mp3");
+        sfxPanic.loop = true;
+        sfxPanic.volume = 0.45;
+
+        let voiceWelcome = new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/GAME-HOT-QUIZ---BRUTUS/main/BOAS-VINDAS%20(Tela%20Inicial).mp3");
+        let voiceFinal = new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/GAME-HOT-QUIZ---BRUTUS/main/CELEBRA%C3%87%C3%83O%20FINAL.mp3");
+        let voiceFreeze = new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/GAME-HOT-QUIZ---BRUTUS/main/CONGELAR.mp3");
+        let voiceHint = new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/GAME-HOT-QUIZ---BRUTUS/main/DICA.mp3");
+        let voiceShield = new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/GAME-HOT-QUIZ---BRUTUS/main/ESCUDO.mp3");
+        let voiceSkip = new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/GAME-HOT-QUIZ---BRUTUS/main/PULAR.mp3");
+        let voiceDanger = new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/ALERTA%20DE%20PERIGO%20(Durante%20a%20Rodada).mp3");
+
+        let voiceCorrectOptions = [
+            new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/GAME-HOT-QUIZ---BRUTUS/main/FEEDBACK%20DE%20ACERTO%2001.mp3"),
+            new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/GAME-HOT-QUIZ---BRUTUS/main/FEEDBACK%20DE%20ACERTO%2002.mp3"),
+            new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/GAME-HOT-QUIZ---BRUTUS/main/FEEDBACK%20DE%20ACERTO%2003.mp3"),
+            new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/GAME-HOT-QUIZ---BRUTUS/main/FEEDBACK%20DE%20ACERTO%2004.mp3")
+        ];
+
+        let voiceWrongOptions = [
+            new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/GAME-HOT-QUIZ---BRUTUS/main/ERRO%20%20EXPLOSAO%2001.mp3"),
+            new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/GAME-HOT-QUIZ---BRUTUS/main/ERRO%20%20EXPLOSAO%2002.mp3"),
+            new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/GAME-HOT-QUIZ---BRUTUS/main/ERRO%20%20EXPLOSAO%2003.mp3"),
+            new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/GAME-HOT-QUIZ---BRUTUS/main/ERRO%20%20EXPLOSAO%2004.mp3")
+        ];
+
+        let activeCorrectPool = [];
+        let activeWrongPool = [];
+
+        function getNextVoice(poolType) {
+            if (poolType === 'correct') {
+                if (activeCorrectPool.length === 0) {
+                    activeCorrectPool = [...voiceCorrectOptions].sort(() => Math.random() - 0.5);
+                }
+                return activeCorrectPool.pop();
+            } else {
+                if (activeWrongPool.length === 0) {
+                    activeWrongPool = [...voiceWrongOptions].sort(() => Math.random() - 0.5);
+                }
+                return activeWrongPool.pop();
+            }
+        }
+
+        let audioEnabled = true;
+        let audioCtx = null;
+        let bgMusic = null;
+        let bgMusicStarted = false;
+        let welcomePlayed = false;
+        let welcomeTimeout = null;
+
+        function initBgMusic() {
+            if (!bgMusic) {
+                bgMusic = new Audio("https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/openmindaudio-cinematic-action-epic-trailer-iron-vanguard-part-2-short-preview-488563.mp3");
+                bgMusic.loop = true;
+                bgMusic.volume = 0.15;
+            }
+            if (audioEnabled && !bgMusicStarted) {
+                bgMusic.play().then(() => { bgMusicStarted = true; }).catch(err => { console.log("Autoplay bloqueado."); });
+            }
+        }
+
+        function triggerWelcomeVoice() {
+            if (welcomePlayed || !audioEnabled || gameState.activeScreen !== 'start') return;
+            welcomePlayed = true;
+            voiceWelcome.currentTime = 0;
+            voiceWelcome.play().catch(err => { welcomePlayed = false; });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadCustomQuestions();
+            loadConfigs();
+            updateSetupSummary();
+            welcomeTimeout = setTimeout(triggerWelcomeVoice, 1000);
+            
+            // Auto-cura de imagens
+            document.getElementById("avatarBlue")?.addEventListener("error", function() {
+                this.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/PRONTOS%20PARA%20INICIAR_EQUIPE%20AZUL.png";
+            });
+            document.getElementById("avatarGreen")?.addEventListener("error", function() {
+                this.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/PRONTOS%20PARA%20INICIAR_EQUIPE%20VERDE.png";
+            });
+        });
+
+        function handleFirstInteraction() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            initBgMusic();
+            if (!welcomePlayed && gameState.activeScreen === 'start') triggerWelcomeVoice();
+        }
+        window.addEventListener('click', handleFirstInteraction, { once: true });
+        window.addEventListener('touchstart', handleFirstInteraction, { once: true });
+        window.addEventListener('keydown', handleFirstInteraction, { once: true });
+
+        function playSuspenseSynth() {
+            if (!audioCtx || !audioEnabled) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            let now = audioCtx.currentTime;
+            let osc = audioCtx.createOscillator();
+            let gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(120, now);
+            osc.frequency.exponentialRampToValueAtTime(550, now + 1.8);
+            gain.gain.setValueAtTime(0.06, now);
+            gain.gain.linearRampToValueAtTime(0, now + 1.8);
+            osc.start(now);
+            osc.stop(now + 1.8);
+        }
+
+        function playSound(type) {
+            if (!audioEnabled) return;
+            try {
+                if (type === 'pass') { sfxWhoosh.currentTime = 0; sfxWhoosh.play(); return; }
+                else if (type === 'win') { sfxVictory.currentTime = 0; sfxVictory.play(); setTimeout(() => { voiceFinal.currentTime = 0; voiceFinal.play(); }, 1000); return; }
+                else if (type === 'correct') { sfxCorreto.currentTime = 0; sfxCorreto.play(); setTimeout(() => { let v = getNextVoice('correct'); v.currentTime = 0; v.play(); }, 400); return; }
+                else if (type === 'power') { sfxPower.currentTime = 0; sfxPower.play(); return; }
+                else if (type === 'error' || type === 'explosion') { sfxIncorreto.currentTime = 0; sfxIncorreto.play(); setTimeout(() => { let v = getNextVoice('wrong'); v.currentTime = 0; v.play(); }, 400); return; }
+                else if (type === 'welcome') { voiceWelcome.currentTime = 0; voiceWelcome.play(); return; }
+                else if (type === 'danger') { voiceDanger.currentTime = 0; voiceDanger.play(); return; }
+                else if (type === 'freeze_voice') { voiceFreeze.currentTime = 0; voiceFreeze.play(); return; }
+                else if (type === 'hint_voice') { voiceHint.currentTime = 0; voiceHint.play(); return; }
+                else if (type === 'shield_voice') { voiceShield.currentTime = 0; voiceShield.play(); return; }
+                else if (type === 'skip_voice') { voiceSkip.currentTime = 0; voiceSkip.play(); return; }
+            } catch (err) { console.log(err); }
+
+            if (!audioCtx) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            const now = audioCtx.currentTime;
+
+            if (type === 'click') {
+                osc.type = 'triangle'; osc.frequency.setValueAtTime(400, now); osc.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+                gain.gain.setValueAtTime(0.1, now); gain.gain.linearRampToValueAtTime(0, now + 0.1);
+                osc.start(now); osc.stop(now + 0.1);
+            } else if (type === 'tick') {
+                osc.type = 'square'; osc.frequency.setValueAtTime(1000, now);
+                gain.gain.setValueAtTime(0.05, now); gain.gain.linearRampToValueAtTime(0, now + 0.05);
+                osc.start(now); osc.stop(now + 0.05);
+            } else if (type === 'tick-fast') {
+                osc.type = 'square'; osc.frequency.setValueAtTime(1500, now);
+                gain.gain.setValueAtTime(0.08, now); gain.gain.linearRampToValueAtTime(0, now + 0.05);
+                osc.start(now); osc.stop(now + 0.05);
+            }
+        }
+
+        function toggleSound() {
+            audioEnabled = !audioEnabled;
+            const icon = document.querySelector("#soundBtn i");
+            if (audioEnabled) {
+                icon.className = "fa-solid fa-volume-high text-green-400";
+                if (bgMusic) bgMusic.play(); else initBgMusic();
+            } else {
+                icon.className = "fa-solid fa-volume-xmark text-red-500";
+                if (bgMusic) bgMusic.pause();
+                voiceWelcome.pause(); voiceDanger.pause(); voiceFreeze.pause(); voiceHint.pause(); voiceShield.pause(); voiceSkip.pause(); voiceFinal.pause(); sfxPanic.pause(); 
+            }
+            playSound('click');
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(err => {});
+            else document.exitFullscreen();
+            playSound('click');
+        }
+
+        function goToScreen(screenName) {
+            playSound('click');
+            if (screenName !== 'start') { clearTimeout(welcomeTimeout); voiceWelcome.pause(); voiceWelcome.currentTime = 0; }
+            if (screenName !== 'arena') { sfxPanic.pause(); sfxPanic.currentTime = 0; }
+            if (bgMusic) bgMusic.volume = (screenName === 'arena') ? 0.35 : 0.15;
+
+            ["screenStart", "screenMode", "screenSetup", "screenArena", "screenDashboard"].forEach(id => {
+                document.getElementById(id).classList.add("hidden");
+            });
+
+            if (screenName === "start") document.getElementById("screenStart").classList.remove("hidden");
+            else if (screenName === "mode") document.getElementById("screenMode").classList.remove("hidden");
+            else if (screenName === "setup") { document.getElementById("screenSetup").classList.remove("hidden"); updateSetupSummary(); }
+            else if (screenName === "arena") document.getElementById("screenArena").classList.remove("hidden");
+            else if (screenName === "dashboard") document.getElementById("screenDashboard").classList.remove("hidden");
+            
+            gameState.activeScreen = screenName;
+        }
+
+        function openModal(modalId) {
+            playSound('click');
+            if (modalId === 'howToPlay') document.getElementById("modalHowToPlay").classList.remove("hidden");
+            if (modalId === 'settings') document.getElementById("modalSettings").classList.remove("hidden");
+            if (modalId === 'teacher') document.getElementById("modalTeacher").classList.remove("hidden");
+        }
+
+        function closeModal(modalId) {
+            playSound('click');
+            if (modalId === 'howToPlay') document.getElementById("modalHowToPlay").classList.add("hidden");
+            if (modalId === 'settings') document.getElementById("modalSettings").classList.add("hidden");
+            if (modalId === 'teacher') document.getElementById("modalTeacher").classList.add("hidden");
+        }
+
+        function toggleAccessibility(type) {
+            playSound('click');
+            if (type === 'contrast') document.body.classList.toggle("high-contrast");
+            else if (type === 'motion') document.body.classList.toggle("reduced-motion");
+        }
+
+        function changeFontSize(direction) {
+            playSound('click');
+            const html = document.documentElement;
+            let currentSize = parseFloat(window.getComputedStyle(html).fontSize);
+            currentSize += direction * 2;
+            if (currentSize >= 12 && currentSize <= 24) html.style.fontSize = `${currentSize}px`;
+        }
+
+        function selectGameMode(mode) {
+            gameState.gameMode = mode;
+            const npcArea = document.getElementById("npcSelectionArea");
+            const targetArea = document.getElementById("targetScoreArea");
+            const setupTitle = document.getElementById("setupTitle");
+
+            if (mode === 'npc') {
+                npcArea.classList.remove("hidden"); targetArea.classList.remove("hidden");
+                setupTitle.innerText = "DESAFIO CONTRA O ROBÔ BRUTUS";
+            } else if (mode === 'coop') {
+                npcArea.classList.add("hidden"); targetArea.classList.add("hidden");
+                setupTitle.innerText = "MODO COOPERATIVO: TURMA UNIDA";
+            } else {
+                npcArea.classList.add("hidden"); targetArea.classList.remove("hidden");
+                setupTitle.innerText = "CONFIGURAÇÃO DA ARENA DE DISPUTA";
+            }
+            goToScreen('setup');
+        }
+
+        function startGame() {
+            saveConfigs();
+            gameState.selectedCurriculum = document.getElementById("setupCurriculum").value;
+            gameState.selectedLevel = document.getElementById("setupLevel").value;
+            gameState.timerLimit = parseInt(document.getElementById("setupTimer").value);
+            gameState.targetScore = parseInt(document.getElementById("setupTargetScore").value);
+            gameState.npcDiff = document.getElementById("setupNpcDiff").value;
+
+            gameState.filteredQuestions = questions.filter(q => {
+                const matchCurriculum = gameState.selectedCurriculum === "all" || q.curriculum === gameState.selectedCurriculum;
+                const matchLevel = gameState.selectedLevel === "all" || q.level === gameState.selectedLevel;
+                return matchCurriculum && matchLevel;
+            });
+
+            if (gameState.filteredQuestions.length === 0) {
+                gameState.filteredQuestions = [...questions];
+                showCustomAlert("Filtros Expandidos", "Não encontramos perguntas com estes filtros. Carregamos o banco de dados padrão para jogar!", "fa-circle-question");
+            }
+
+            gameState.filteredQuestions.sort(() => Math.random() - 0.5);
+
+            gameState.scoreBlue = 0; gameState.scoreGreen = 0; gameState.coopLives = 3; gameState.comboBlue = 0; gameState.comboGreen = 0;
+            gameState.currentQuestionIndex = 0; gameState.isPaused = false;
+            // Reset de Powerups Usados
+            gameState.teamPowerupsUsed.blue.clear();
+            gameState.teamPowerupsUsed.green.clear();
+
+            gameState.pwrShieldActive = false;
+            gameState.totalCorrectAnswers = 0; gameState.totalWrongAnswers = 0; gameState.answerTimes = []; gameState.skillsAcquired.clear();
+            gameState.activeTeam = Math.random() > 0.5 ? "blue" : "green";
+
+            const coopLivesContainer = document.getElementById("coopLivesContainer");
+            const targetScoreLabel = document.getElementById("arenaScoreLabel");
+            const targetScoreValue = document.getElementById("arenaScoreTarget");
+            const subInfo = document.getElementById("arenaSubInfo");
+
+            if (gameState.gameMode === 'coop') {
+                coopLivesContainer.classList.remove("hidden");
+                targetScoreLabel.innerText = "Meta de Acertos"; targetScoreValue.innerText = "8 Perguntas"; subInfo.innerText = "Modo: Cooperativo (Turma Unida)";
+                updateCoopLivesUI();
+            } else {
+                coopLivesContainer.classList.add("hidden");
+                targetScoreLabel.innerText = "Limite de Vitória"; targetScoreValue.innerText = `${gameState.targetScore} Pontos`;
+                subInfo.innerText = gameState.gameMode === 'npc' ? "Modo: Aluno vs Brutus IA" : "Modo: Equipe vs Equipe";
+            }
+            goToScreen('arena'); startRound();
+        }
+
+        let activeEvent = null;
+        function rollRandomEvent() {
+            const eventBadge = document.getElementById("activeEventBadge");
+            const eventName = document.getElementById("activeEventName");
+            if (Math.random() < 0.25) {
+                const events = ["supernova", "ventosolar", "gravidade"];
+                activeEvent = events[Math.floor(Math.random() * events.length)];
+                eventBadge.classList.remove("hidden"); playSound('power');
+
+                if (activeEvent === "supernova") eventName.innerText = "🔥 Evento: Supernova (Dobro de Pontos!)";
+                else if (activeEvent === "ventosolar") { eventName.innerText = "❄️ Evento: Vento Solar (Tempo Extra)"; gameState.timer += 8; updateTimerUI(); }
+                else if (activeEvent === "gravidade") { eventName.innerText = "🔄 Evento: Gravidade (Batata Invertida!)"; passPotato(); }
+            } else {
+                activeEvent = null; eventBadge.classList.add("hidden");
+            }
+        }
+
+        function startRound() {
+            clearInterval(gameState.timerInterval); sfxPanic.pause(); sfxPanic.currentTime = 0;
+            gameState.timer = gameState.timerLimit; gameState.isPaused = false; gameState.pwrShieldActive = false;
+            
+            document.getElementById("screenArena").classList.remove("panic-active");
+            document.getElementById("centralPotato").classList.remove("animate-potato-panic");
+            document.getElementById("panelBlue").classList.remove("glass-shattered");
+            document.getElementById("panelGreen").classList.remove("glass-shattered");
+            document.getElementById("scratchpadOverlay").classList.add("hidden");
+
+            updatePowerupButtonsState();
+            updatePotatoIndicators(); rollRandomEvent(); 
+
+            if (gameState.currentQuestionIndex >= gameState.filteredQuestions.length) { finishGame(); return; }
+
+            const currentQ = gameState.filteredQuestions[gameState.currentQuestionIndex];
+            document.getElementById("curriculumTag").innerText = `${currentQ.curriculum} - ${currentQ.bncc}`;
+            document.getElementById("questionText").innerText = currentQ.statement;
+
+            const mediaContainer = document.getElementById("questionMedia");
+            const img = document.getElementById("questionImage");
+            if (currentQ.image) { img.src = currentQ.image; mediaContainer.classList.remove("hidden"); } else { mediaContainer.classList.add("hidden"); }
+
+            const container = document.getElementById("optionsContainer");
+            container.innerHTML = "";
+            currentQ.options.forEach((opt, idx) => {
+                const btn = document.createElement("button"); btn.className = "btn-option-crystal w-full";
+                const letter = ["A", "B", "C", "D"][idx];
+                btn.innerHTML = `<span class="w-7 h-7 sm:w-8 sm:h-8 bg-yellow-400 text-amber-950 font-lilita rounded-full flex items-center justify-center group-hover:scale-110 transition flex-shrink-0">${letter}</span> <span class="text-left font-bold leading-snug">${opt}</span>`;
+                btn.onclick = () => { if (gameState.gameMode === 'npc' && gameState.activeTeam === 'green') return; checkAnswer(idx); };
+                container.appendChild(btn);
+            });
+
+            updateTimerUI();
+            gameState.timerInterval = setInterval(() => {
+                if (!gameState.isPaused) {
+                    gameState.timer--; updateTimerUI();
+                    if (gameState.timer <= 0) { clearInterval(gameState.timerInterval); timeOutExplosion(); }
+                }
+            }, 1000);
+
+            if (gameState.gameMode === 'npc' && gameState.activeTeam === 'green') {
+                disableOptionButtons(); triggerNpcAction();
+            }
+        }
+
+        function triggerNpcAction() {
+            const thinkingTime = 3000 + Math.random() * 2000;
+            setTimeout(() => {
+                if (gameState.isPaused || gameState.activeScreen !== 'arena') return;
+                let successChance = 0.75;
+                if (gameState.npcDiff === 'easy') successChance = 0.60;
+                if (gameState.npcDiff === 'hard') successChance = 0.90;
+
+                const currentQ = gameState.filteredQuestions[gameState.currentQuestionIndex];
+                const roll = Math.random();
+                let chosenIndex = (roll < successChance) ? currentQ.correct : (() => {
+                    let incorrects = []; currentQ.options.forEach((_, idx) => { if (idx !== currentQ.correct) incorrects.push(idx); });
+                    return incorrects[Math.floor(Math.random() * incorrects.length)];
+                })();
+
+                const buttons = document.querySelectorAll("#optionsContainer button");
+                if (buttons[chosenIndex]) buttons[chosenIndex].classList.add("border-purple-400", "scale-105", "bg-purple-950/50");
+                setTimeout(() => { checkAnswer(chosenIndex); }, 1000);
+            }, thinkingTime);
+        }
+
+        function updateTimerUI() {
+            const display = document.getElementById("timerDisplay");
+            const progress = document.getElementById("timerProgress");
+            const mainPotato = document.getElementById("centralPotato");
+
+            display.innerText = `${gameState.timer}s`;
+            progress.style.width = `${(gameState.timer / gameState.timerLimit) * 100}%`;
+
+            if (gameState.timer === 10) playSound('danger');
+            if (gameState.timer === 5 && audioEnabled) { sfxPanic.currentTime = 0; sfxPanic.play().catch(e => console.log(e)); }
+
+            if (gameState.timer <= 5) {
+                document.getElementById("screenArena").classList.add("panic-active"); mainPotato.classList.add("animate-potato-panic");
+                display.className = "text-3xl md:text-4xl font-lilita text-red-500 tracking-wider animate-pulse";
+                progress.className = "h-full bg-red-600 progress-bar-glow animate-pulse"; playSound('tick-fast');
+            } else if (gameState.timer <= 10) {
+                document.getElementById("screenArena").classList.remove("panic-active"); mainPotato.classList.remove("animate-potato-panic");
+                display.className = "text-3xl md:text-4xl font-lilita text-red-500 tracking-wider animate-pulse";
+                progress.className = "h-full bg-red-500 progress-bar-glow animate-pulse"; playSound('tick-fast');
+            } else {
+                document.getElementById("screenArena").classList.remove("panic-active"); mainPotato.classList.remove("animate-potato-panic");
+                display.className = "text-3xl md:text-4xl font-lilita text-green-400 tracking-wider";
+                progress.className = "h-full bg-green-500 transition-all duration-100 ease-linear";
+                if (gameState.timer % 2 === 0) playSound('tick');
+            }
+        }
+
+        // CONTROLADOR DE ATRIBUIÇÃO DE BATATA DA EQUIPA E PULSAÇÃO VERMELHA GIGANTE
+        function updatePotatoIndicators() {
+            const indicatorBlue = document.getElementById("potatoIndicatorBlue");
+            const indicatorGreen = document.getElementById("potatoIndicatorGreen");
+            const glowBlue = document.getElementById("potatoGlowBlue");
+            const glowGreen = document.getElementById("potatoGlowGreen");
+            const avatarBlue = document.getElementById("avatarBlue");
+            const avatarGreen = document.getElementById("avatarGreen");
+            
+            const pBlue = document.getElementById("panelBlue");
+            const pGreen = document.getElementById("panelGreen");
+
+            if (gameState.comboBlue >= 3) pBlue.classList.add("streak-on-fire"); else pBlue.classList.remove("streak-on-fire");
+            if (gameState.comboGreen >= 3) pGreen.classList.add("streak-on-fire"); else pGreen.classList.remove("streak-on-fire");
+
+            if (gameState.activeTeam === 'blue') {
+                if (indicatorBlue) indicatorBlue.classList.remove("hidden"); if (indicatorGreen) indicatorGreen.classList.add("hidden");
+                
+                if (glowBlue) {
+                    glowBlue.classList.remove("hidden");
+                    glowBlue.classList.add("active-potato-panel-glow");
+                }
+                if (glowGreen) {
+                    glowGreen.classList.add("hidden");
+                    glowGreen.classList.remove("active-potato-panel-glow");
+                }
+                
+                avatarBlue.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_BATATA%20NA%20M%C3%83O_EQUIPE_AZUL.png";
+                avatarGreen.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_EQUIPE_VERDE_CAPIT%C3%83O.png";
+            } else {
+                if (indicatorBlue) indicatorBlue.classList.add("hidden"); if (indicatorGreen) indicatorGreen.classList.remove("hidden");
+                
+                if (glowBlue) {
+                    glowBlue.classList.add("hidden");
+                    glowBlue.classList.remove("active-potato-panel-glow");
+                }
+                if (glowGreen) {
+                    glowGreen.classList.remove("hidden");
+                    glowGreen.classList.add("active-potato-panel-glow");
+                }
+
+                avatarBlue.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_EQUIPE_AZUL_CAPIT%C3%83O.png";
+                avatarGreen.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_BATATA%20NA%20M%C3%83O_EQUIPE_VERDE.png";
+            }
+        }
+
+        function disableOptionButtons() {
+            document.querySelectorAll("#optionsContainer button").forEach(btn => btn.disabled = true);
+        }
+
+        // --- MOTOR DE RESPOSTA E FEEDBACK VISUAL ---
+        function checkAnswer(selectedIndex) {
+            clearInterval(gameState.timerInterval); sfxPanic.pause(); sfxPanic.currentTime = 0; disableOptionButtons();
+            const currentQ = gameState.filteredQuestions[gameState.currentQuestionIndex];
+            const isCorrect = (selectedIndex === currentQ.correct);
+            gameState.answerTimes.push(gameState.timerLimit - gameState.timer);
+
+            const buttons = document.querySelectorAll("#optionsContainer button");
+            
+            // Etapa 1: Suspense (A alternativa selecionada pisca em dourado)
+            if (buttons[selectedIndex]) buttons[selectedIndex].classList.add("option-suspense");
+            playSuspenseSynth();
+
+            setTimeout(() => {
+                // Etapa 2: Revelação (A alternativa selecionada ganha a cor verde ou vermelha)
+                if (buttons[selectedIndex]) {
+                    buttons[selectedIndex].classList.remove("option-suspense");
+                    if (isCorrect) {
+                        buttons[selectedIndex].classList.add("option-correct-reveal");
+                    } else {
+                        buttons[selectedIndex].classList.add("option-incorrect-reveal");
+                        // Revela também qual era a certa se o jogador tiver errado
+                        if (buttons[currentQ.correct]) buttons[currentQ.correct].classList.add("option-correct-reveal");
+                    }
+                }
+                
+                if (isCorrect) {
+                    playSound('correct'); 
+                } else {
+                    playSound('error');
+                    if (gameState.activeTeam === 'blue') document.getElementById("panelBlue").classList.add("glass-shattered");
+                    else document.getElementById("panelGreen").classList.add("glass-shattered");
+                }
+
+                // Etapa 3: Transição para a próxima ação
+                setTimeout(() => {
+                    if (isCorrect) {
+                        gameState.totalCorrectAnswers++; gameState.skillsAcquired.add(currentQ.bncc);
+                        let pointsGained = 10; let speedBonus = false;
+                        if (gameState.timer >= (gameState.timerLimit * 0.7)) { pointsGained += 5; speedBonus = true; }
+                        if (activeEvent === "supernova") pointsGained *= 2;
+
+                        if (gameState.activeTeam === 'blue') {
+                            gameState.comboBlue++; gameState.comboGreen = 0;
+                            if (gameState.comboBlue === 3) pointsGained += 10; if (gameState.comboBlue === 5) pointsGained += 20;
+                            gameState.scoreBlue += pointsGained;
+                        } else {
+                            gameState.comboGreen++; gameState.comboBlue = 0;
+                            if (gameState.comboGreen === 3) pointsGained += 10; if (gameState.comboGreen === 5) pointsGained += 20;
+                            gameState.scoreGreen += pointsGained;
+                        }
+                        updateScoreboards(); triggerThrowAnimation(speedBonus);
+                    } else handleWrongAnswer();
+                }, 1500); // Fica a mostrar as cores por 1.5s
+            }, 1800); // Suspense dura 1.8s
+        }
+
+        function handleWrongAnswer() {
+            if (gameState.pwrShieldActive) {
+                gameState.pwrShieldActive = false; playSound('click');
+                showCustomAlert("Escudo Ativo! 🛡️", "A Equipe protegida não perdeu pontos!", "fa-shield-halved");
+                setTimeout(nextQuestion, 1500); return;
+            }
+            gameState.totalWrongAnswers++; gameState.comboBlue = 0; gameState.comboGreen = 0;
+
+            if (gameState.gameMode === 'coop') { gameState.coopLives--; updateCoopLivesUI(); }
+            else { if (gameState.activeTeam === 'blue') gameState.scoreGreen += 10; else gameState.scoreBlue += 10; }
+            updateScoreboards(); triggerBurnAnimation();
+        }
+
+        function timeOutExplosion() {
+            playSound('explosion');
+            if (gameState.activeTeam === 'blue') document.getElementById("panelBlue").classList.add("glass-shattered");
+            else document.getElementById("panelGreen").classList.add("glass-shattered");
+            handleWrongAnswer();
+        }
+
+        function updateScoreboards() {
+            document.getElementById("scoreBlue").innerText = gameState.scoreBlue; document.getElementById("scoreGreen").innerText = gameState.scoreGreen;
+            const cBlue = document.getElementById("comboBlue");
+            if (gameState.comboBlue > 1) { cBlue.innerText = `Combo x${gameState.comboBlue}`; cBlue.classList.remove("hidden"); } else cBlue.classList.add("hidden");
+            const cGreen = document.getElementById("comboGreen");
+            if (gameState.comboGreen > 1) { cGreen.innerText = `Combo x${gameState.comboGreen}`; cGreen.classList.remove("hidden"); } else cGreen.classList.add("hidden");
+        }
+
+        function updateCoopLivesUI() {
+            for (let i = 1; i <= 3; i++) {
+                const icon = document.getElementById(`life${i}`);
+                if (i <= gameState.coopLives) icon.className = "fa-solid fa-heart text-red-500 text-sm animate-pulse";
+                else icon.className = "fa-regular fa-heart text-gray-600 text-sm";
+            }
+        }
+
+        // --- SISTEMA DE FUMAÇA VOLUMÉTRICA ---
+        function createSmokeEffect() {
+            const container = document.getElementById("smokeContainer");
+            container.innerHTML = ""; // limpa fumaças anteriores
+            for(let i=0; i<18; i++) {
+                let smoke = document.createElement("div");
+                smoke.className = "smoke-particle";
+                let size = 150 + Math.random() * 250;
+                smoke.style.width = size + "px";
+                smoke.style.height = size + "px";
+                // Posiciona a fumaça no centro com algum espalhamento aleatório
+                smoke.style.left = `calc(50% + ${(Math.random() - 0.5) * 300}px - ${size/2}px)`;
+                smoke.style.top = `calc(50% + ${(Math.random() - 0.5) * 200}px - ${size/2}px)`;
+                smoke.style.animationDelay = (Math.random() * 0.4) + "s";
+                container.appendChild(smoke);
+            }
+        }
+
+        function triggerThrowAnimation(speedBonus) {
+            const modal = document.getElementById("modalActionAnimation"); const title = document.getElementById("animationTitle");
+            const sub = document.getElementById("animationSubText"); const leftAvatar = document.getElementById("animAvatarLeft");
+            const rightAvatar = document.getElementById("animAvatarRight"); const nameLeft = document.getElementById("animNameLeft");
+            const nameRight = document.getElementById("animNameRight");
+
+            // Limpar fumaça para animação de arremesso normal
+            document.getElementById("smokeContainer").innerHTML = "";
+
+            if (gameState.activeTeam === 'blue') {
+                title.innerText = "BATATA LANÇADA COM SUCESSO!"; title.className = "text-4xl md:text-5xl font-lilita text-gameBlue-light animate-bounce text-center";
+                sub.innerText = speedBonus ? "⚡ Combo Veloz! Bónus Ativo! ⚡" : "Seguro! Lançamento perfeito.";
+                leftAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_JOGANDO_BATATA_AZUL_DIREITA.png"; rightAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/PRONTOS%20PARA%20INICIAR_EQUIPE%20VERDE.png";
+                nameLeft.innerText = "EQUIPE AZUL"; nameRight.innerText = gameState.gameMode === 'npc' ? "ROBÔ BRUTUS" : "EQUIPE VERDE";
+            } else {
+                title.innerText = "ARREMESSO RÁPIDO!"; title.className = "text-4xl md:text-5xl font-lilita text-gameGreen-light animate-bounce text-center";
+                sub.innerText = speedBonus ? "⚡ Combo Veloz! Bónus Ativo! ⚡" : "Seguro! Lançamento perfeito.";
+                leftAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/PRONTOS%20PARA%20INICIAR_EQUIPE%20AZUL.png"; rightAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_JOGANDOBATATA_VERDE_ESQUERDA.png";
+                nameLeft.innerText = "EQUIPE AZUL"; nameRight.innerText = gameState.gameMode === 'npc' ? "ROBÔ BRUTUS" : "EQUIPE VERDE";
+            }
+
+            modal.classList.remove("hidden"); playSound('pass'); gameState.activeTeam = (gameState.activeTeam === 'blue') ? 'green' : 'blue';
+            updatePotatoIndicators();
+            setTimeout(() => { modal.classList.add("hidden"); nextQuestion(); }, 3000);
+        }
+
+        function triggerBurnAnimation() {
+            const modal = document.getElementById("modalActionAnimation"); const title = document.getElementById("animationTitle");
+            const sub = document.getElementById("animationSubText"); const leftAvatar = document.getElementById("animAvatarLeft");
+            const rightAvatar = document.getElementById("animAvatarRight"); const nameLeft = document.getElementById("animNameLeft");
+            const nameRight = document.getElementById("animNameRight");
+
+            title.innerText = "💥 A BATATA QUEIMOU! 💥"; title.className = "text-4xl md:text-5xl font-lilita text-red-500 animate-bounce text-center";
+            sub.innerText = "Fim do tempo ou erro! Ponto do adversário.";
+
+            if (gameState.activeTeam === 'blue') {
+                leftAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_EQUIPE%20AZUL_BATATA%20QUENTE%20QUEIMOU_PERDEU.png"; rightAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_EQUIPE_VERDE_CAPIT%C3%83O.png";
+                nameLeft.innerText = "EQUIPE AZUL (QUEIMOU)"; nameRight.innerText = gameState.gameMode === 'npc' ? "ROBÔ BRUTUS" : "EQUIPE VERDE";
+            } else {
+                leftAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_EQUIPE_AZUL_CAPIT%C3%83O.png"; rightAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/BRUTUS_EQUIPE%20VERDE_BATATA%20QUENTE%20QUEIMOU_PERDEU.png";
+                nameLeft.innerText = "EQUIPE AZUL"; nameRight.innerText = gameState.gameMode === 'npc' ? "ROBÔ BRUTUS (QUEIMOU)" : "EQUIPE VERDE (QUEIMOU)";
+            }
+
+            // Injetar a Fumaça Volumétrica mesmo antes de exibir o modal!
+            createSmokeEffect();
+
+            modal.classList.remove("hidden");
+            setTimeout(() => {
+                modal.classList.add("hidden");
+                if (gameState.gameMode === 'coop' && gameState.coopLives <= 0) finishGame();
+                else if (gameState.gameMode !== 'coop' && (gameState.scoreBlue >= gameState.targetScore || gameState.scoreGreen >= gameState.targetScore)) finishGame();
+                else nextQuestion();
+            }, 3500);
+        }
+
+        function nextQuestion() { gameState.currentQuestionIndex++; startRound(); }
+
+        function togglePauseGame() {
+            gameState.isPaused = !gameState.isPaused; const btn = document.getElementById("pauseBtn");
+            if (gameState.isPaused) { sfxPanic.pause(); btn.innerHTML = `<i class="fa-solid fa-play"></i> Despausar`; btn.className = "btn-premium btn-md btn-green px-3 py-1 cursor-pointer"; }
+            else { if (gameState.timer <= 5 && audioEnabled) sfxPanic.play(); btn.innerHTML = `<i class="fa-solid fa-pause"></i> Pausar`; btn.className = "btn-premium btn-md btn-amber px-3 py-1 cursor-pointer"; }
+            playSound('click');
+        }
+
+        function teacherValidateResult(forceCorrect) {
+            // LIMPEZA DE CÓDIGO REDUNDANTE: A função checkAnswer já trata do temporizador e dos botões.
+            const currentQ = gameState.filteredQuestions[gameState.currentQuestionIndex];
+            // Passa o índice correto se forceCorrect for true, ou um índice incorreto se for false.
+            if (forceCorrect) checkAnswer(currentQ.correct);
+            else checkAnswer((currentQ.correct + 1) % 4);
+        }
+
+        function passPotato() {
+            playSound('pass'); gameState.activeTeam = (gameState.activeTeam === 'blue') ? 'green' : 'blue';
+            updatePotatoIndicators(); showCustomAlert("Repassada! 🔄", "A batata mudou de lado!", "fa-arrows-spin");
+        }
+
+        let confirmCallback = null;
+        function showCustomConfirm(title, text, onConfirm) {
+            document.getElementById("customConfirmTitle").innerText = title; document.getElementById("customConfirmText").innerText = text;
+            confirmCallback = onConfirm; document.getElementById("customConfirmModal").classList.remove("hidden");
+        }
+        function closeCustomConfirm() { playSound('click'); document.getElementById("customConfirmModal").classList.add("hidden"); }
+        document.getElementById("customConfirmBtnYes").onclick = function() { if (confirmCallback) confirmCallback(); closeCustomConfirm(); }
+        function confirmExitGame() { showCustomConfirm("Sair do Jogo?", "Deseja abandonar a arena de jogo e voltar ao ecrã inicial?", () => { clearInterval(gameState.timerInterval); goToScreen('start'); }); }
+
+        function usePowerup(type) {
+            const currentTeam = gameState.activeTeam;
+            const teamName = currentTeam === 'blue' ? "Equipe Azul" : "Equipe Verde";
+
+            if (gameState.teamPowerupsUsed[currentTeam].has(type)) {
+                showCustomAlert("Poder Já Utilizado", `A ${teamName} já usou este poder na partida!`, "fa-ban");
+                return;
+            }
+
+            // Marcar como usado
+            gameState.teamPowerupsUsed[currentTeam].add(type);
+            updatePowerupButtonsState();
+
+            if (type === 'freeze') {
+                gameState.isPaused = true; playSound('freeze_voice');
+                const display = document.getElementById("timerDisplay"); display.style.color = "#38bdf8"; display.classList.add("animate-pulse");
+                showCustomAlert("Tempo Congelado! ❄️", `${teamName} ganhou +5 segundos extras de tempo!`, "fa-snowflake");
+                setTimeout(() => { if (gameState.activeScreen === 'arena') { gameState.isPaused = false; display.style.color = ""; display.classList.remove("animate-pulse"); } }, 5000);
+            } else if (type === 'hint') {
+                playSound('hint_voice');
+                showCustomAlert("Pista Pedagógica", `Dica para a ${teamName}: ` + (gameState.filteredQuestions[gameState.currentQuestionIndex].hint || "Pense bem nas alternativas fornecidas!"), "fa-lightbulb");
+            } else if (type === 'shield') {
+                playSound('shield_voice');
+                gameState.pwrShieldActive = true; showCustomAlert("Escudo Ativo! 🛡️", `${teamName} está protegida contra erro nesta rodada!`, "fa-shield-halved");
+            } else if (type === 'skip') {
+                playSound('skip_voice');
+                showCustomAlert("Pulou! ⏭️", `${teamName} pulou a pergunta! Nova pergunta carregada!`, "fa-forward-fast"); setTimeout(nextQuestion, 1500);
+            }
+        }
+
+        function updatePowerupButtonsState() {
+            const currentTeam = gameState.activeTeam;
+            const powerups = ['freeze', 'hint', 'shield', 'skip'];
+            powerups.forEach(type => {
+                const btn = document.getElementById(`pwr${type.charAt(0).toUpperCase() + type.slice(1)}`);
+                if (gameState.teamPowerupsUsed[currentTeam].has(type)) {
+                    btn.disabled = true;
+                    btn.classList.add("opacity-50", "cursor-not-allowed");
+                } else {
+                    btn.disabled = false;
+                    btn.classList.remove("opacity-50", "cursor-not-allowed");
+                }
+            });
+        }
+
+        function showCustomAlert(title, text, iconClass = "fa-triangle-exclamation") {
+            document.getElementById("customAlertTitle").innerText = title; document.getElementById("customAlertText").innerText = text;
+            document.getElementById("customAlertIcon").className = `fa-solid ${iconClass}`; document.getElementById("customAlertModal").classList.remove("hidden");
+        }
+        function closeCustomAlert() { playSound('click'); document.getElementById("customAlertModal").classList.add("hidden"); }
+
+        function finishGame() {
+            clearInterval(gameState.timerInterval); sfxPanic.pause(); sfxPanic.currentTime = 0; playSound('win');
+            let blueWins = false; let greenWins = false; let isCoopWin = false;
+
+            if (gameState.gameMode === 'coop') isCoopWin = gameState.coopLives > 0;
+            else { blueWins = gameState.scoreBlue > gameState.scoreGreen; greenWins = gameState.scoreGreen > gameState.scoreBlue; }
+
+            const title = document.getElementById("winnerAnnounceText"); const scores = document.getElementById("dashFinalScores"); const congrats = document.getElementById("dashPedagogicalCongrats");
+            const leftAvatar = document.getElementById("dashLeftAvatar"); const rightAvatar = document.getElementById("dashRightAvatar");
+            const leftLabel = document.getElementById("dashLeftLabel"); const rightLabel = document.getElementById("dashRightLabel");
+
+            leftAvatar.className = "h-[14vh] md:h-[25vh] max-h-[180px] sm:max-h-[220px] object-contain transition-all duration-300";
+            rightAvatar.className = "h-[14vh] md:h-[25vh] max-h-[180px] sm:max-h-[220px] object-contain transition-all duration-300";
+
+            if (gameState.gameMode === 'coop') {
+                scores.innerText = `Acertos: ${gameState.totalCorrectAnswers}`; leftLabel.innerText = "EQUIPE AZUL (COOP)"; rightLabel.innerText = "EQUIPE VERDE (COOP)";
+                if (isCoopWin) {
+                    title.innerText = "COOPERAÇÃO VITORIOSA!"; title.className = "text-lg font-lilita text-gameGreen-light"; congrats.innerText = "Parabéns! A classe cooperou de forma espetacular e dominou os objetivos propostos!";
+                    leftAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/EQUIPE%20AZUL_CAMPE%C3%83O_FINAL.png"; rightAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/EQUIPE%20VERDE_CAMPE%C3%83O_FINAL.png";
+                    leftAvatar.classList.add("animate-hover", "drop-shadow-[0_8px_16px_rgba(0,112,243,0.5)]"); rightAvatar.classList.add("animate-hover", "drop-shadow-[0_8px_16px_rgba(34,197,94,0.5)]");
+                } else {
+                    title.innerText = "QUASE LÁ! FOCO!";
+                    title.className = "text-lg font-lilita text-red-400"; congrats.innerText = "A batata quente acabou por queimar as 3 vidas coletivas. Revejam as pistas para uma nova tentativa!";
+                    leftAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/EQUIPE%20AZUL_PERDEU_FINAL.png"; rightAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/EQUIPE%20VERDEU_PERDEU_FINAL.png";
+                    leftAvatar.classList.add("opacity-60"); rightAvatar.classList.add("opacity-60");
+                }
+            } else {
+                scores.innerText = `${gameState.scoreBlue} x ${gameState.scoreGreen}`;
+                if (blueWins) {
+                    title.innerText = "VITÓRIA DA EQUIPE AZUL!"; title.className = "text-lg font-lilita text-gameBlue-light"; congrats.innerText = "A Equipe Azul demonstrou prontidão fantástica e agilidade de arremesso.";
+                    leftLabel.innerText = "EQUIPE AZUL (CAMPEÃ)"; rightLabel.innerText = "EQUIPE VERDE";
+                    leftAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/EQUIPE%20AZUL_CAMPE%C3%83O_FINAL.png"; rightAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/EQUIPE%20VERDEU_PERDEU_FINAL.png";
+                    leftAvatar.classList.add("animate-hover", "drop-shadow-[0_8px_16px_rgba(0,112,243,0.5)]"); rightAvatar.classList.add("opacity-60");
+                } else if (greenWins) {
+                    title.innerText = gameState.gameMode === 'npc' ? "VITÓRIA DO ROBÔ BRUTUS!" : "VITÓRIA DA EQUIPE VERDE!"; title.className = "text-lg font-lilita text-gameGreen-light"; congrats.innerText = gameState.gameMode === 'npc' ? "Desta vez a inteligência artificial foi mais rápida! Pratique mais." : "A Equipe Verde mostrou excelente resiliência nas jogadas finais.";
+                    leftLabel.innerText = "EQUIPE AZUL"; rightLabel.innerText = gameState.gameMode === 'npc' ? "ROBÔ BRUTUS (CAMPEÃO)" : "EQUIPE VERDE (CAMPEÃ)";
+                    leftAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/EQUIPE%20AZUL_PERDEU_FINAL.png"; rightAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/EQUIPE%20VERDE_CAMPE%C3%83O_FINAL.png";
+                    rightAvatar.classList.add("animate-hover", "drop-shadow-[0_8px_16px_rgba(34,197,94,0.5)]"); leftAvatar.classList.add("opacity-60");
+                } else {
+                    title.innerText = "EMPATE HISTÓRICO!"; title.className = "text-yellow-300 text-lg font-lilita"; congrats.innerText = "Ambas as equipes se equipararam em velocidade e domínio!";
+                    leftLabel.innerText = "EQUIPE AZUL"; rightLabel.innerText = "EQUIPE VERDE";
+                    leftAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/EQUIPE%20AZUL_CAMPE%C3%83O_FINAL.png"; rightAvatar.src = "https://raw.githubusercontent.com/augustoborges-ship-it/AVATAR-BRUTUS/main/EQUIPE%20VERDE_CAMPE%C3%83O_FINAL.png";
+                    leftAvatar.classList.add("animate-hover"); rightAvatar.classList.add("animate-hover");
+                }
+            }
+
+            const total = gameState.totalCorrectAnswers + gameState.totalWrongAnswers; const accuracy = total > 0 ? Math.round((gameState.totalCorrectAnswers / total) * 100) : 0;
+            document.getElementById("dashAccuracy").innerText = `${accuracy}%`; document.getElementById("dashCorrectCount").innerText = gameState.totalCorrectAnswers; document.getElementById("dashErrorCount").innerText = gameState.totalWrongAnswers;
+            
+            const avgTimeStr = gameState.answerTimes.length > 0 ? (gameState.answerTimes.reduce((a, b) => a + b, 0) / gameState.answerTimes.length).toFixed(1) : "0.0";
+            document.getElementById("dashAvgTime").innerText = `${avgTimeStr}s`;
+            
+            document.getElementById("dashBnccSkills").innerText = gameState.skillsAcquired.size > 0 ? Array.from(gameState.skillsAcquired).join(", ") : "Nenhuma";
+
+            const recommendation = document.getElementById("dashRecommendation");
+            if (accuracy >= 80) recommendation.innerText = "Excelente desempenho de domínio curricular! A equipe demonstrou elevado foco em componentes do quotidiano e está pronta para desafios mais complexos ou avançar de conteúdo!";
+            else if (accuracy >= 50) recommendation.innerText = "Bom domínio intermediário. Foque nos conceitos com erros para consolidar antes do encerramento do ciclo pedagógico.";
+            else recommendation.innerText = "Taxa de acerto abaixo do esperado. Recomenda-se realizar uma mediação direta no quadro para revisão e consolidação dos tópicos antes da próxima partida.";
+
+            if (isCoopWin || blueWins || greenWins) createConfettiEffect();
+            goToScreen('dashboard');
+        }
+
+        function restartGameWithSameConfig() { startGame(); }
+
+        function createConfettiEffect() {
+            const screenWidth = window.innerWidth;
+            for (let i = 0; i < 80; i++) {
+                const conf = document.createElement("div"); conf.className = "confetti"; const initialLeft = Math.random() * screenWidth;
+                conf.style.left = `${initialLeft}px`; conf.style.top = `-20px`; conf.style.backgroundColor = ["#4fa8ff", "#22c55e", "#ff9d42", "#facc15", "#ec4899"][Math.floor(Math.random() * 5)]; conf.style.transform = `rotate(${Math.random() * 360}deg)`;
+                document.body.appendChild(conf);
+                let y = -20; let x = initialLeft; const speedY = 3 + Math.random() * 5; const speedX = -1.5 + Math.random() * 3;
+                const anim = setInterval(() => { y += speedY; x += speedX; conf.style.top = `${y}px`; conf.style.left = `${x}px`; if (y > window.innerHeight) { clearInterval(anim); conf.remove(); } }, 30);
+            }
+        }
+
+        let scratchpadCanvasObj = document.getElementById("scratchpadCanvas");
+        let sCtx = null;
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        function initScratchpad() {
+            if (scratchpadCanvasObj && !sCtx) {
+                sCtx = scratchpadCanvasObj.getContext("2d");
+                scratchpadCanvasObj.addEventListener("mousedown", startDrawing);
+                scratchpadCanvasObj.addEventListener("mousemove", draw);
+                scratchpadCanvasObj.addEventListener("mouseup", stopDrawing);
+                scratchpadCanvasObj.addEventListener("mouseout", stopDrawing);
+
+                scratchpadCanvasObj.addEventListener("touchstart", startDrawing, { passive: false });
+                scratchpadCanvasObj.addEventListener("touchmove", draw, { passive: false });
+                scratchpadCanvasObj.addEventListener("touchend", stopDrawing);
+            }
+        }
+
+        function resizeScratchpadCanvas() {
+            if (!scratchpadCanvasObj) return;
+            scratchpadCanvasObj.width = scratchpadCanvasObj.clientWidth;
+            scratchpadCanvasObj.height = scratchpadCanvasObj.clientHeight;
+            if (sCtx) {
+                sCtx.strokeStyle = "#a78bfa";
+                sCtx.lineWidth = 3;
+                sCtx.lineCap = "round";
+                sCtx.lineJoin = "round";
+            }
+        }
+
+        function getCoordinates(e) {
+            const rect = scratchpadCanvasObj.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const coords = getCoordinates(e);
+            lastX = coords.x;
+            lastY = coords.y;
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            e.preventDefault();
+            const coords = getCoordinates(e);
+            if (sCtx) {
+                sCtx.beginPath();
+                sCtx.moveTo(lastX, lastY);
+                sCtx.lineTo(coords.x, coords.y);
+                sCtx.stroke();
+            }
+            lastX = coords.x;
+            lastY = coords.y;
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function toggleScratchpad(show) {
+            playSound('click');
+            const overlay = document.getElementById("scratchpadOverlay");
+            if (show) {
+                overlay.classList.remove("hidden");
+                initScratchpad();
+                setTimeout(resizeScratchpadCanvas, 50);
+            } else {
+                overlay.classList.add("hidden");
+            }
+        }
+
+        function clearScratchpad() { 
+            playSound('click'); 
+            if (sCtx && scratchpadCanvasObj) {
+                sCtx.clearRect(0, 0, scratchpadCanvasObj.width, scratchpadCanvasObj.height); 
+            }
+        }
+
+        function copyBnccReport() {
+            playSound('click'); const total = gameState.totalCorrectAnswers + gameState.totalWrongAnswers; const accuracy = total > 0 ? Math.round((gameState.totalCorrectAnswers / total) * 100) : 0; const avgTime = gameState.answerTimes.length > 0 ? (gameState.answerTimes.reduce((a, b) => a + b, 0) / gameState.answerTimes.length).toFixed(1) : "0.0"; const skills = gameState.skillsAcquired.size > 0 ? Array.from(gameState.skillsAcquired).join(", ") : "Nenhuma";
+            const currentDate = new Date().toLocaleDateString('pt-PT'); const currentTime = new Date().toLocaleTimeString('pt-PT', {hour: '2-digit', minute:'2-digit'});
+            let recText = ""; if (accuracy >= 80) recText = "Excelente desempenho de domínio curricular! A equipe demonstrou elevado foco em componentes do quotidiano e está pronta para desafios mais complexos ou avançar de conteúdo!"; else if (accuracy >= 50) recText = "Bom domínio intermediário. Foque nos conceitos com erros para consolidar antes do encerramento do ciclo pedagógico."; else recText = "Taxa de acerto abaixo do esperado. Recomenda-se realizar uma mediação direta no quadro para revisão e consolidação dos tópicos antes da próxima partida.";
+            
+            const modeDict = {team: "Equipe vs Equipe", npc: "Aluno vs Brutus IA", coop: "Cooperativo"};
+            const gameModeLabel = modeDict[gameState.gameMode];
+            const currLabel = gameState.selectedCurriculum === "all" ? "Misto" : gameState.selectedCurriculum;
+            const levelLabel = gameState.selectedLevel === "all" ? "Qualquer Nível" : gameState.selectedLevel;
+
+            const reportText = `================================================\nBRUTUS HOT QUIZ - RELATÓRIO PEDAGÓGICO BNCC\n================================================\nData da Ronda: ${currentDate} às ${currentTime}\nÁrea Curricular: ${currLabel}\nNível de Ensino: ${levelLabel}\nModo de Jogo: ${gameModeLabel}\n------------------------------------------------\nMÉTRICAS DE DESEMPENHO:\n- Taxa de Acerto: ${accuracy}%\n- Respostas Corretas: ${gameState.totalCorrectAnswers}\n- Respostas Incorretas: ${gameState.totalWrongAnswers}\n- Tempo Médio de Resposta: ${avgTime}s\n- Habilidades BNCC Assinaladas: ${skills}\n------------------------------------------------\nSUGESTÃO DE DIRETRIZ PEDAGÓGICA:\n${recText}\n================================================\nEditora Brasil Cultural - Todos os direitos reservados.`;
+            
+            const el = document.createElement('textarea'); el.value = reportText; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
+            showCustomAlert("Relatório Copiado! 📋", "O plano de desempenho BNCC foi copiado para a sua área de transferência. Cole-o no seu diário de planejamento ou editor de texto!", "fa-circle-check");
+        }
+
+        function openTeacherDashboard() { buildTeacherQuestionsList(); openModal('teacher'); }
+        function switchTeacherTab(tab) { playSound('click'); const skills = document.getElementById("teacherTabSkills"); const editor = document.getElementById("teacherTabEditor"); const btnSkills = document.getElementById("tabBtnSkills"); const btnEditor = document.getElementById("tabBtnEditor"); if (tab === 'skills') { skills.classList.remove("hidden"); editor.classList.add("hidden"); btnSkills.className = "font-lilita px-3 py-1.5 border-b-2 border-purple-500 text-purple-300"; btnEditor.className = "font-lilita px-3 py-1.5 border-b-2 border-transparent text-gray-400 hover:text-white"; } else { skills.classList.add("hidden"); editor.classList.remove("hidden"); btnSkills.className = "font-lilita px-3 py-1.5 border-b-2 border-transparent text-gray-400 hover:text-white"; btnEditor.className = "font-lilita px-3 py-1.5 border-b-2 border-purple-500 text-purple-300"; } }
+        function buildTeacherQuestionsList() { const list = document.getElementById("teacherQuestionsList"); const count = document.getElementById("teacherQuestionsCount"); list.innerHTML = ""; count.innerText = questions.length; questions.forEach((q, idx) => { const item = document.createElement("div"); item.className = "glass-stat-card p-2.5 text-xs flex justify-between items-center gap-2"; item.innerHTML = ` <div class="flex-grow"> <span class="bg-purple-600/30 text-purple-300 font-bold px-1.5 py-0.5 rounded text-[10px] uppercase mr-1">${q.curriculum} (${q.bncc})</span> <strong class="text-white">${q.statement}</strong> </div> <button onclick="deleteCustomQuestion(${q.id})" class="text-red-400 hover:text-red-300 px-2 py-1 bg-red-950/40 rounded transition cursor-pointer"> <i class="fa-solid fa-trash-can"></i> </button> `; list.appendChild(item); }); }
+        function saveCustomQuestion() { const curriculum = document.getElementById("newQCurriculum").value; const level = document.getElementById("newQLevel").value; const bncc = document.getElementById("newQBncc").value; const statement = document.getElementById("newQText").value; const optionsStr = document.getElementById("newQOptions").value; const correct = parseInt(document.getElementById("newQCorrect").value); const hint = document.getElementById("newQHint").value; const options = optionsStr.split(",").map(opt => opt.trim()); if (options.length !== 4) { showCustomAlert("Erro de Validação", "Insira exatamente 4 opções separadas por vírgulas.", "fa-triangle-exclamation"); return; } const newQ = { id: Date.now(), level, curriculum, bncc, statement, options, correct, hint }; questions.push(newQ); buildTeacherQuestionsList(); document.getElementById("addQuestionForm").reset(); playSound('correct'); showCustomAlert("Questão Guardada!", "A nova pergunta foi integrada no jogo!", "fa-circle-check"); }
+        function deleteCustomQuestion(id) { playSound('click'); if (questions.length <= 4) { showCustomAlert("Impossível Eliminar", "O jogo necessita de pelo menos 4 questões ativas.", "fa-ban"); return; } questions = questions.filter(q => q.id !== id); buildTeacherQuestionsList(); }
+        function updateSetupSummary() { const modeVal = { team: "Equipes", npc: "Robô IA", coop: "Coop" }[gameState.gameMode] || "Misto"; const curVal = document.getElementById("setupCurriculum").value; const levelVal = document.getElementById("setupLevel").value; const timerVal = document.getElementById("setupTimer").value; const targetVal = document.getElementById("setupTargetScore").value; document.getElementById("sumMode").innerText = modeVal; document.getElementById("sumCurriculum").innerText = curVal === "all" ? "Misto" : curVal; document.getElementById("sumLevel").innerText = levelVal === "all" ? "Geral" : levelVal; document.getElementById("sumTimer").innerText = timerVal + "s"; const sumTargetWrapper = document.getElementById("sumTargetWrapper"); if (gameState.gameMode === "coop") { sumTargetWrapper.classList.remove("hidden"); document.getElementById("sumTarget").innerText = "8 Acertos"; } else { sumTargetWrapper.classList.remove("hidden"); document.getElementById("sumTarget").innerText = targetVal + " pts"; } }
+        window.onload = function() { goToScreen('start'); }
+    </script>
+</body>
+</html>
